@@ -4,254 +4,440 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulador de Selección de Proyectos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
-  :root {
-    --bg: #ffffff;
-    --bg2: #f5f5f3;
-    --bg3: #eef4fc;
-    --text: #1a1a18;
-    --text2: #5f5e5a;
-    --text3: #9c9a92;
-    --border: rgba(0,0,0,0.12);
-    --border2: rgba(0,0,0,0.22);
-    --blue: #185FA5;
-    --blue-bg: #eef4fc;
-    --blue-text: #0C447C;
-    --green: #1D9E75;
-    --green-bg: #E1F5EE;
-    --green-text: #0F6E56;
-    --radius: 10px;
-    --radius-lg: 14px;
-  }
- 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1e1e1c;
-      --bg2: #2a2a28;
-      --bg3: #1a2535;
-      --text: #e8e6de;
-      --text2: #b4b2a9;
-      --text3: #6e6c65;
-      --border: rgba(255,255,255,0.12);
-      --border2: rgba(255,255,255,0.22);
-      --blue-bg: #1a2535;
-      --blue-text: #85B7EB;
-      --green-bg: #04342C;
-      --green-text: #5DCAA5;
-    }
-  }
- 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg2);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 1rem;
-  }
- 
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    background: var(--bg);
-    border-radius: var(--radius-lg);
-    border: 0.5px solid var(--border);
-    padding: 1.5rem 1.25rem;
-  }
- 
-  .header { text-align: center; margin-bottom: 1.25rem; }
-  .header img { height: 58px; object-fit: contain; margin-bottom: .6rem; }
-  .header h1 { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
-  .header p { font-size: 12px; color: var(--text2); line-height: 1.55; max-width: 380px; margin-inline: auto; }
- 
-  .dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 1.25rem; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); transition: background .3s; }
-  .dot.active { background: var(--blue); }
-  .dot.done { background: var(--green); }
- 
-  .step { display: none; }
-  .step.active { display: block; }
- 
-  .step-title { font-size: 16px; font-weight: 600; color: var(--text); text-align: center; margin-bottom: .3rem; }
-  .step-sub { font-size: 13px; color: var(--text2); text-align: center; margin-bottom: 1.25rem; line-height: 1.5; }
- 
-  .toggle-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
-  .toggle-btn {
-    border: 0.5px solid var(--border2);
-    border-radius: var(--radius);
-    padding: 8px 16px;
-    font-size: 13px;
-    cursor: pointer;
-    background: var(--bg);
-    color: var(--text2);
-    transition: all .2s;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .toggle-btn.on { background: var(--blue); color: #fff; border-color: var(--blue); }
- 
-  .horizon-row { margin-bottom: 1.25rem; }
-  .horizon-row p { font-size: 13px; color: var(--text2); text-align: center; margin-bottom: .5rem; }
-  .horizon-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-  .horizon-btn {
-    padding: 6px 14px; font-size: 12px;
-    border: 0.5px solid var(--border2);
-    background: var(--bg); color: var(--text2);
-    border-radius: var(--radius); cursor: pointer; transition: all .2s;
-  }
-  .horizon-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
- 
-  .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
- 
-  .card {
-    background: var(--bg);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1rem;
-  }
-  .card.winner { border: 2px solid var(--green); }
- 
-  .badge {
-    display: inline-block; font-size: 11px; font-weight: 600;
-    padding: 3px 10px; border-radius: 20px; margin-bottom: .6rem;
-  }
-  .ba { background: #E1F5EE; color: #0F6E56; }
-  .bb { background: #FAEEDA; color: #854F0B; }
-  .bc { background: #FAECE7; color: #993C1D; }
- 
-  .card-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: .75rem; }
- 
-  .slider-row { display: flex; align-items: center; gap: 8px; margin-bottom: .5rem; }
-  .slider-row label { font-size: 12px; color: var(--text2); min-width: 65px; }
-  .slider-row input[type=range] { flex: 1; accent-color: var(--blue); }
-  .slider-row .val { font-size: 13px; font-weight: 600; min-width: 42px; text-align: right; color: var(--text); }
- 
-  .metrics { display: flex; gap: 8px; margin-top: .5rem; flex-wrap: wrap; }
-  .metric { background: var(--bg2); border-radius: var(--radius); padding: .5rem .75rem; flex: 1; min-width: 70px; }
-  .metric-label { font-size: 11px; color: var(--text3); margin-bottom: 2px; }
-  .metric-val { font-size: 15px; font-weight: 600; color: var(--text); }
- 
-  .btn-primary {
-    background: var(--blue); color: #fff;
-    border: none; border-radius: var(--radius);
-    padding: 10px 28px; font-size: 14px; font-weight: 600;
-    cursor: pointer; transition: background .2s;
-    display: inline-flex; align-items: center; gap: 6px;
-  }
-  .btn-primary:hover { background: var(--blue-text); }
-  .btn-primary:disabled { background: var(--border2); cursor: not-allowed; }
- 
-  .btn-secondary {
-    background: var(--bg); color: var(--text);
-    border: 0.5px solid var(--border2);
-    border-radius: var(--radius); padding: 9px 18px;
-    font-size: 13px; cursor: pointer; transition: background .2s;
-    display: inline-flex; align-items: center; gap: 6px;
-  }
-  .btn-secondary:hover { background: var(--bg2); }
- 
-  .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
- 
-  .bar-bg { background: var(--border); border-radius: 4px; height: 10px; margin: .4rem 0; }
-  .bar-fill { height: 10px; border-radius: 4px; transition: width .7s ease; }
- 
-  .winner-badge {
-    background: var(--green-bg); color: var(--green-text);
-    font-size: 11px; font-weight: 600;
-    padding: 2px 10px; border-radius: 20px; margin-left: 8px;
-  }
- 
-  .info-box {
-    background: var(--blue-bg); border-radius: var(--radius);
-    padding: .875rem 1rem; margin-bottom: 1rem;
-  }
-  .info-box-title { font-size: 13px; font-weight: 600; color: var(--blue-text); margin-bottom: .35rem; display: flex; align-items: center; gap: 5px; }
-  .info-box p { font-size: 13px; color: var(--blue); line-height: 1.6; }
- 
-  .conclusion-box {
-    background: var(--bg2); border-radius: var(--radius);
-    padding: .875rem; margin-bottom: 1rem;
-  }
-  .conclusion-box p { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
-  .conclusion-box .text { font-size: 13px; color: var(--text); line-height: 1.6; }
- 
-  textarea {
-    width: 100%; border: 0.5px solid var(--border2);
-    border-radius: var(--radius); padding: 9px 12px;
-    font-size: 13px; color: var(--text);
-    background: var(--bg); resize: vertical;
-    font-family: inherit; line-height: 1.5; margin-bottom: .25rem;
-  }
-  textarea:focus { outline: none; border-color: var(--blue); }
- 
-  .share-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
-  .share-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    border: 0.5px solid var(--border2); border-radius: var(--radius);
-    padding: 8px 16px; font-size: 13px; cursor: pointer;
-    background: var(--bg); color: var(--text);
-    text-decoration: none; transition: background .2s;
-  }
-  .share-btn:hover { background: var(--bg2); }
- 
-  .footer {
-    border-top: 0.5px solid var(--border);
-    margin-top: 1.5rem; padding-top: .875rem;
-    text-align: center;
-    font-size: 11px; color: var(--text3);
-  }
- 
-  .comp-header {
-    display: flex; align-items: center;
-    justify-content: space-between; flex-wrap: wrap; gap: 6px;
-    margin-bottom: .35rem;
-  }
- 
-  @media (max-width: 480px) {
-    body { padding: .5rem; }
-    .container { padding: 1.25rem 1rem; }
-    .toggle-btn { padding: 7px 12px; font-size: 12px; }
-    .btn-primary { padding: 9px 20px; font-size: 13px; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#0B1340;
+  --navy2:#131C52;
+  --blue:#2B5CE6;
+  --blue2:#4F7AFF;
+  --cyan:#00D4FF;
+  --green:#00E5A0;
+  --amber:#FFB800;
+  --coral:#FF5C5C;
+  --white:#FFFFFF;
+  --off:#F0F3FF;
+  --muted:#8892B8;
+  --glass:rgba(255,255,255,0.06);
+  --glass2:rgba(255,255,255,0.10);
+  --border:rgba(255,255,255,0.12);
+  --radius:12px;
+  --radius-lg:20px;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy);
+  color:var(--white);
+  min-height:100vh;
+  padding:1rem;
+  overflow-x:hidden;
+}
+
+/* Fondo animado */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(43,92,230,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 110%, rgba(0,212,255,0.2) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(0,229,160,0.08) 0%, transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.wrap{
+  position:relative;
+  z-index:1;
+  max-width:700px;
+  margin:0 auto;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  padding:2rem 1rem 1.5rem;
+}
+.logo-wrap{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--glass2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:.5rem 1.25rem;
+  margin-bottom:1.25rem;
+  backdrop-filter:blur(12px);
+}
+.logo-wrap img{height:44px;object-fit:contain}
+.header h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(1.5rem,4vw,2.2rem);
+  font-weight:800;
+  line-height:1.15;
+  letter-spacing:-0.03em;
+  background:linear-gradient(135deg, var(--white) 30%, var(--cyan));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:.5rem;
+}
+.header p{
+  font-size:13px;
+  color:var(--muted);
+  max-width:380px;
+  margin-inline:auto;
+  line-height:1.6;
+}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:rgba(0,212,255,0.1);
+  border:1px solid rgba(0,212,255,0.25);
+  color:var(--cyan);
+  font-size:11px;
+  font-weight:500;
+  padding:3px 10px;
+  border-radius:20px;
+  margin-bottom:.75rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+/* Progress */
+.progress{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  margin-bottom:2rem;
+}
+.prog-step{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+.prog-dot{
+  width:32px;height:32px;
+  border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;
+  color:var(--muted);
+  background:var(--glass);
+  transition:all .4s;
+  font-family:'Syne',sans-serif;
+}
+.prog-dot.active{
+  border-color:var(--blue2);
+  background:var(--blue);
+  color:var(--white);
+  box-shadow:0 0 18px rgba(79,122,255,0.5);
+}
+.prog-dot.done{
+  border-color:var(--green);
+  background:rgba(0,229,160,0.15);
+  color:var(--green);
+}
+.prog-line{
+  width:48px;height:2px;
+  background:var(--border);
+  margin:0 -2px;
+  margin-bottom:18px;
+  transition:background .4s;
+}
+.prog-line.done{background:var(--green)}
+.prog-label{font-size:10px;color:var(--muted);text-align:center;letter-spacing:.03em}
+
+/* Card base */
+.card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:1.25rem;
+  backdrop-filter:blur(16px);
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.card:hover{border-color:rgba(255,255,255,0.2)}
+
+/* Step */
+.step{display:none}
+.step.active{display:block;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.step-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.35rem;
+  font-weight:700;
+  color:var(--white);
+  text-align:center;
+  margin-bottom:.35rem;
+}
+.step-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:1.5rem;line-height:1.5}
+
+/* Toggle buttons */
+.toggle-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.toggle-btn{
+  border:1px solid var(--border);
+  border-radius:40px;
+  padding:8px 18px;
+  font-size:13px;font-weight:500;
+  cursor:pointer;
+  background:var(--glass);
+  color:var(--muted);
+  transition:all .25s;
+  display:flex;align-items:center;gap:6px;
+  font-family:'DM Sans',sans-serif;
+  backdrop-filter:blur(8px);
+}
+.toggle-btn:hover{border-color:rgba(255,255,255,0.3);color:var(--white)}
+.toggle-btn.on{
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  border-color:var(--blue2);
+  color:var(--white);
+  box-shadow:0 4px 20px rgba(43,92,230,0.4);
+}
+
+/* Horizon */
+.horizon-section{margin-bottom:1.5rem}
+.horizon-section p{font-size:12px;color:var(--muted);text-align:center;margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.06em}
+.horizon-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.horizon-btn{
+  padding:6px 16px;font-size:12px;font-weight:500;
+  border:1px solid var(--border);
+  background:var(--glass);color:var(--muted);
+  border-radius:30px;cursor:pointer;
+  transition:all .25s;
+  font-family:'DM Sans',sans-serif;
+}
+.horizon-btn:hover{color:var(--white);border-color:rgba(255,255,255,0.3)}
+.horizon-btn.active{
+  background:rgba(0,212,255,0.12);
+  border-color:var(--cyan);
+  color:var(--cyan);
+}
+
+/* Project cards */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:1.5rem}
+
+.proj-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:1.1rem;
+  backdrop-filter:blur(16px);
+}
+.proj-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:600;
+  padding:3px 10px;border-radius:20px;
+  margin-bottom:.75rem;
+  letter-spacing:.03em;text-transform:uppercase;
+}
+.badge-a{background:rgba(0,229,160,0.12);color:var(--green);border:1px solid rgba(0,229,160,0.25)}
+.badge-b{background:rgba(255,184,0,0.12);color:var(--amber);border:1px solid rgba(255,184,0,0.25)}
+.badge-c{background:rgba(79,122,255,0.12);color:var(--blue2);border:1px solid rgba(79,122,255,0.25)}
+
+.proj-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:.85rem}
+
+/* Slider */
+.slider-row{display:flex;align-items:center;gap:8px;margin-bottom:.75rem}
+.slider-row label{font-size:11px;color:var(--muted);min-width:60px;text-transform:uppercase;letter-spacing:.04em}
+.slider-row input[type=range]{
+  flex:1;
+  -webkit-appearance:none;
+  height:4px;
+  border-radius:2px;
+  background:var(--border);
+  outline:none;
+}
+.slider-a input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--green);cursor:pointer;box-shadow:0 0 8px rgba(0,229,160,0.5)}
+.slider-b input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--amber);cursor:pointer;box-shadow:0 0 8px rgba(255,184,0,0.5)}
+.slider-c input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue2);cursor:pointer;box-shadow:0 0 8px rgba(79,122,255,0.5)}
+.slider-val{font-size:13px;font-weight:600;min-width:40px;text-align:right;color:var(--white);font-family:'Syne',sans-serif}
+
+/* Metrics */
+.metrics{display:flex;gap:8px;flex-wrap:wrap}
+.metric{
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:.5rem .7rem;flex:1;min-width:70px;
+}
+.metric-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.metric-val{font-size:15px;font-weight:700;color:var(--white);font-family:'Syne',sans-serif}
+
+/* Buttons */
+.btn-primary{
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:var(--white);border:none;
+  border-radius:40px;
+  padding:11px 32px;font-size:14px;font-weight:500;
+  cursor:pointer;transition:all .25s;
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'DM Sans',sans-serif;
+  box-shadow:0 4px 24px rgba(43,92,230,0.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(43,92,230,0.5)}
+.btn-primary:disabled{background:var(--glass);box-shadow:none;color:var(--muted);cursor:not-allowed;transform:none}
+.btn-primary.big{padding:14px 40px;font-size:15px;font-weight:600}
+
+.btn-ghost{
+  background:var(--glass);color:var(--muted);
+  border:1px solid var(--border);
+  border-radius:40px;padding:10px 22px;
+  font-size:13px;cursor:pointer;
+  transition:all .25s;
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'DM Sans',sans-serif;
+  backdrop-filter:blur(8px);
+}
+.btn-ghost:hover{color:var(--white);border-color:rgba(255,255,255,0.3)}
+
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1.25rem}
+
+/* Comparativa */
+.comp-card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:1.1rem;
+  margin-bottom:10px;
+  backdrop-filter:blur(16px);
+  transition:border-color .3s;
+}
+.comp-card.winner{border-color:var(--green);box-shadow:0 0 30px rgba(0,229,160,0.12)}
+.comp-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:.75rem}
+.winner-tag{
+  background:rgba(0,229,160,0.12);
+  border:1px solid rgba(0,229,160,0.3);
+  color:var(--green);
+  font-size:11px;font-weight:600;
+  padding:2px 10px;border-radius:20px;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.roi-val{font-size:13px;color:var(--muted)}
+
+/* Bar */
+.bar-bg{background:rgba(255,255,255,0.08);border-radius:4px;height:6px;margin:.5rem 0}
+.bar-fill{height:6px;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+
+/* Info box */
+.info-box{
+  background:rgba(79,122,255,0.08);
+  border:1px solid rgba(79,122,255,0.25);
+  border-radius:var(--radius-lg);
+  padding:1rem 1.1rem;
+  margin-bottom:1.25rem;
+}
+.info-box-title{font-size:12px;font-weight:600;color:var(--blue2);margin-bottom:.4rem;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.05em}
+.info-box p{font-size:13px;color:rgba(79,122,255,0.9);line-height:1.6}
+
+/* Cierre box */
+.cierre-box{
+  background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,229,160,0.06));
+  border:1px solid rgba(0,212,255,0.2);
+  border-radius:var(--radius-lg);
+  padding:1.25rem;
+  text-align:center;
+  margin-bottom:1.5rem;
+}
+.cierre-box p{font-size:14px;color:var(--white);line-height:1.7}
+.cierre-box strong{color:var(--cyan)}
+
+/* Share */
+.share-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.share-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--border);border-radius:30px;
+  padding:8px 18px;font-size:13px;font-weight:500;
+  cursor:pointer;background:var(--glass);color:var(--white);
+  text-decoration:none;transition:all .25s;
+  font-family:'DM Sans',sans-serif;
+  backdrop-filter:blur(8px);
+}
+.share-btn:hover{border-color:rgba(255,255,255,0.35);transform:translateY(-1px)}
+
+/* Resumen */
+.resumen-box{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:1.1rem 1.25rem;
+  margin-bottom:1.25rem;
+  font-size:13px;color:var(--muted);line-height:1.8;
+}
+.resumen-box strong{color:var(--white)}
+
+/* Footer */
+.footer{
+  border-top:1px solid var(--border);
+  margin-top:2rem;padding-top:.875rem;
+  text-align:center;
+  font-size:11px;color:var(--muted);
+  letter-spacing:.03em;
+}
+
+@media(max-width:480px){
+  body{padding:.5rem}
+  .btn-primary.big{padding:12px 28px;font-size:14px}
+}
 </style>
 </head>
 <body>
-<div class="container">
- 
+<div class="wrap">
+
   <div class="header">
-    <img src="https://i.postimg.cc/FKz4sz2C/logoutelsinfondo.png" alt="Logo universidad">
-    <h1>Simulador de Selección de Proyectos</h1>
-    <p>
-      <i class="ti ti-info-circle"></i>
-      Ajusta cuánto inviertes en cada proyecto y el horizonte de tiempo. Analiza cuál te da mayor retorno y saca tus propias conclusiones.
-    </p>
+    <div class="logo-wrap">
+      <img src="https://i.postimg.cc/FKz4sz2C/logoutelsinfondo.png" alt="Logo universidad">
+    </div>
+    <div class="tag"><i class="ti ti-chart-bar"></i> Semana 1</div>
+    <h1>Simulador de Selección<br>de Proyectos</h1>
+    <p>Ajusta tu inversión, elige el horizonte de tiempo y descubre cuál proyecto te da el mayor retorno.</p>
   </div>
- 
-  <div class="dots">
-    <div class="dot active" id="d1"></div>
-    <div class="dot" id="d2"></div>
-    <div class="dot" id="d3"></div>
+
+  <div class="progress" id="progress">
+    <div class="prog-step">
+      <div class="prog-dot active" id="d1">1</div>
+      <div class="prog-label">Configura</div>
+    </div>
+    <div class="prog-line" id="l1"></div>
+    <div class="prog-step">
+      <div class="prog-dot" id="d2">2</div>
+      <div class="prog-label">Analiza</div>
+    </div>
+    <div class="prog-line" id="l2"></div>
+    <div class="prog-step">
+      <div class="prog-dot" id="d3">3</div>
+      <div class="prog-label">Comparte</div>
+    </div>
   </div>
- 
+
   <!-- PASO 1 -->
   <div class="step active" id="step1">
-    <p class="step-title">¿Cuántos proyectos quieres analizar?</p>
-    <p class="step-sub">Puedes comparar uno, dos o los tres al mismo tiempo</p>
- 
+    <p class="step-title">¿Cuántos proyectos analizas?</p>
+    <p class="step-sub">Activa uno, dos o los tres y ajusta cuánto inviertes en cada uno</p>
+
     <div class="toggle-row">
       <button class="toggle-btn" id="togA" onclick="toggleProj('A')">
-        <i class="ti ti-building-store"></i> Cafetería (A)
+        <i class="ti ti-building-store"></i> Cafetería
       </button>
       <button class="toggle-btn" id="togB" onclick="toggleProj('B')">
-        <i class="ti ti-device-laptop"></i> Tienda en línea (B)
+        <i class="ti ti-device-laptop"></i> Tienda en línea
       </button>
       <button class="toggle-btn" id="togC" onclick="toggleProj('C')">
-        <i class="ti ti-wash-dryclean"></i> Lavandería (C)
+        <i class="ti ti-wash-dryclean"></i> Lavandería
       </button>
     </div>
- 
-    <div class="horizon-row">
+
+    <div class="horizon-section">
       <p>Horizonte de análisis</p>
       <div class="horizon-btns">
         <button class="horizon-btn" onclick="setHorizon(6,this)">6 meses</button>
@@ -260,35 +446,30 @@
         <button class="horizon-btn" onclick="setHorizon(24,this)">2 años</button>
       </div>
     </div>
- 
+
     <div class="proj-grid" id="proj-cards"></div>
- 
+
     <div style="text-align:center">
       <button class="btn-primary" id="btn-analizar" onclick="goStep2()" disabled>
         Ver análisis <i class="ti ti-arrow-right"></i>
       </button>
     </div>
   </div>
- 
+
   <!-- PASO 2 -->
   <div class="step" id="step2">
-    <p class="step-title">Comparativa de proyectos</p>
+    <p class="step-title">Comparativa</p>
     <p class="step-sub" id="horizonte-label">Proyección a 12 meses</p>
- 
-    <div id="comparativa" style="display:grid;gap:10px;margin-bottom:1.25rem"></div>
- 
+
+    <div id="comparativa" style="margin-bottom:1.25rem"></div>
+
     <div class="info-box">
       <div class="info-box-title"><i class="ti ti-bulb"></i> Reflexión</div>
       <p id="reflexion-txt"></p>
     </div>
- 
-    <div style="margin-bottom:1rem">
-      <p style="font-size:13px;color:var(--text2);margin-bottom:.5rem">¿Qué concluyes tú? Escribe tu análisis:</p>
-      <textarea id="conclusion" rows="3" placeholder="Ej: El proyecto B es más accesible porque requiere menos capital, aunque la lavandería da más ganancia total..."></textarea>
-    </div>
- 
+
     <div class="btn-row">
-      <button class="btn-secondary" onclick="goStep1()">
+      <button class="btn-ghost" onclick="goStep1()">
         <i class="ti ti-arrow-left"></i> Ajustar
       </button>
       <button class="btn-primary" onclick="goStep3()">
@@ -296,217 +477,203 @@
       </button>
     </div>
   </div>
- 
+
   <!-- PASO 3 -->
   <div class="step" id="step3">
-    <p class="step-title">Tu análisis</p>
-    <p class="step-sub">Resultado de tu simulación</p>
- 
-    <div class="conclusion-box" id="resumen-final"></div>
-    <div id="conclusion-display"></div>
- 
-    <p style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:.75rem">Comparte tu resultado con tus compañeros</p>
+    <p class="step-title">Tu resultado</p>
+    <p class="step-sub">Así quedó tu simulación</p>
+
+    <div class="resumen-box" id="resumen-final"></div>
+
+    <div class="cierre-box">
+      <p>
+        Recuerda: el mejor proyecto no siempre es el de mayor ganancia.<br>
+        <strong>Los métodos de selección te ayudan a decidir con criterios objetivos.</strong>
+      </p>
+    </div>
+
+    <p style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em">Comparte con tus compañeros</p>
     <div class="share-row">
       <a id="swa" class="share-btn" target="_blank">
-        <i class="ti ti-brand-whatsapp" style="font-size:18px;color:#25D366"></i> WhatsApp
+        <i class="ti ti-brand-whatsapp" style="font-size:17px;color:#25D366"></i> WhatsApp
       </a>
       <a id="stw" class="share-btn" target="_blank">
-        <i class="ti ti-brand-x" style="font-size:18px"></i> Twitter/X
+        <i class="ti ti-brand-x" style="font-size:17px"></i> Twitter/X
       </a>
       <a id="sfb" class="share-btn" target="_blank">
-        <i class="ti ti-brand-facebook" style="font-size:18px;color:#1877F2"></i> Facebook
+        <i class="ti ti-brand-facebook" style="font-size:17px;color:#4F9CF9"></i> Facebook
       </a>
     </div>
- 
+
     <div style="text-align:center">
-      <button class="btn-primary" onclick="reiniciar()">
-        <i class="ti ti-refresh"></i> Nueva simulación
+      <button class="btn-primary big" onclick="reiniciar()">
+        <i class="ti ti-refresh"></i> Simular de nuevo
       </button>
     </div>
   </div>
- 
+
   <div class="footer">
-    Selección de Proyectos — Semana 1 &nbsp;|&nbsp; Dr. Armando Sandoval Maravilla
+    Selección de Proyectos — Semana 1 &nbsp;·&nbsp; Dr. Armando Sandoval Maravilla
   </div>
- 
+
 </div>
- 
+
 <script>
-var proyectos = {
-  A: { nombre:'Cafetería',       badgeClass:'ba', invMax:50, invDef:30, ganBase:8,  color:'#0F6E56', barColor:'#1D9E75' },
-  B: { nombre:'Tienda en línea', badgeClass:'bb', invMax:30, invDef:15, ganBase:4,  color:'#854F0B', barColor:'#EF9F27' },
-  C: { nombre:'Lavandería',      badgeClass:'bc', invMax:50, invDef:50, ganBase:12, color:'#993C1D', barColor:'#D85A30' }
+var proyectos={
+  A:{nombre:'Cafetería',      badgeClass:'badge-a',sliderClass:'slider-a',invMax:50,invDef:30,ganBase:8, color:'#00E5A0',barColor:'#00E5A0'},
+  B:{nombre:'Tienda en línea',badgeClass:'badge-b',sliderClass:'slider-b',invMax:30,invDef:15,ganBase:4, color:'#FFB800',barColor:'#FFB800'},
+  C:{nombre:'Lavandería',     badgeClass:'badge-c',sliderClass:'slider-c',invMax:50,invDef:50,ganBase:12,color:'#4F7AFF',barColor:'#4F7AFF'}
 };
-var activos   = { A:false, B:false, C:false };
-var invValues = { A:30, B:15, C:50 };
-var horizon   = 12;
- 
-function toggleProj(k) {
-  activos[k] = !activos[k];
-  document.getElementById('tog'+k).classList.toggle('on', activos[k]);
+var activos={A:false,B:false,C:false};
+var invValues={A:30,B:15,C:50};
+var horizon=12;
+
+function toggleProj(k){
+  activos[k]=!activos[k];
+  document.getElementById('tog'+k).classList.toggle('on',activos[k]);
   renderCards();
-  document.getElementById('btn-analizar').disabled = !Object.values(activos).some(Boolean);
+  document.getElementById('btn-analizar').disabled=!Object.values(activos).some(Boolean);
 }
- 
-function setHorizon(h, el) {
-  horizon = h;
-  document.querySelectorAll('.horizon-btn').forEach(function(b){ b.classList.remove('active'); });
+
+function setHorizon(h,el){
+  horizon=h;
+  document.querySelectorAll('.horizon-btn').forEach(function(b){b.classList.remove('active')});
   el.classList.add('active');
   renderCards();
 }
- 
-function ganancia(k, inv) {
-  var ratio = inv / proyectos[k].invDef;
-  return Math.round(proyectos[k].ganBase * ratio * horizon);
+
+function ganancia(k,inv){
+  return Math.round(proyectos[k].ganBase*(inv/proyectos[k].invDef)*horizon);
 }
- 
-function roi(k, inv) {
-  return Math.round((ganancia(k, inv) / inv) * 100);
+function roi(k,inv){
+  return Math.round((ganancia(k,inv)/inv)*100);
 }
- 
-function renderCards() {
-  var html = '';
-  Object.keys(proyectos).forEach(function(k) {
-    if (!activos[k]) return;
-    var p   = proyectos[k];
-    var inv = invValues[k];
-    var gan = ganancia(k, inv);
-    var r   = roi(k, inv);
-    html +=
-      '<div class="card">' +
-        '<span class="badge ' + p.badgeClass + '">Proyecto ' + k + ' — ' + p.nombre + '</span>' +
-        '<div class="slider-row">' +
-          '<label>Inversión</label>' +
-          '<input type="range" min="5" max="' + p.invMax + '" step="1" value="' + inv +
-            '" oninput="updInv(\'' + k + '\',+this.value)">' +
-          '<span class="val" id="inv' + k + '">$' + inv + 'k</span>' +
-        '</div>' +
-        '<div class="metrics">' +
-          '<div class="metric"><div class="metric-label">Ganancia en ' + horizon + ' meses</div><div class="metric-val" id="gan' + k + '">$' + gan + 'k</div></div>' +
-          '<div class="metric"><div class="metric-label">ROI total</div><div class="metric-val" id="roi' + k + '">' + r + '%</div></div>' +
-        '</div>' +
-      '</div>';
+
+function renderCards(){
+  var html='';
+  Object.keys(proyectos).forEach(function(k){
+    if(!activos[k])return;
+    var p=proyectos[k];
+    var inv=invValues[k];
+    var gan=ganancia(k,inv);
+    var r=roi(k,inv);
+    html+='<div class="proj-card">'+
+      '<div class="proj-badge '+p.badgeClass+'">Proyecto '+k+'</div>'+
+      '<div class="proj-name">'+p.nombre+'</div>'+
+      '<div class="slider-row '+p.sliderClass+'">'+
+        '<label>Inversión</label>'+
+        '<input type="range" min="5" max="'+p.invMax+'" step="1" value="'+inv+'" oninput="updInv(\''+k+'\',+this.value)">'+
+        '<span class="slider-val" id="inv'+k+'">$'+inv+'k</span>'+
+      '</div>'+
+      '<div class="metrics">'+
+        '<div class="metric"><div class="metric-label">Ganancia</div><div class="metric-val" id="gan'+k+'">$'+gan+'k</div></div>'+
+        '<div class="metric"><div class="metric-label">ROI</div><div class="metric-val" id="roi'+k+'">'+r+'%</div></div>'+
+      '</div>'+
+    '</div>';
   });
-  document.getElementById('proj-cards').innerHTML = html;
+  document.getElementById('proj-cards').innerHTML=html;
 }
- 
-function updInv(k, v) {
-  invValues[k] = v;
-  var gan = ganancia(k, v);
-  var r   = roi(k, v);
-  var eI  = document.getElementById('inv' + k);
-  var eG  = document.getElementById('gan' + k);
-  var eR  = document.getElementById('roi' + k);
-  if (eI) eI.textContent = '$' + v + 'k';
-  if (eG) eG.textContent = '$' + gan + 'k';
-  if (eR) eR.textContent = r + '%';
+
+function updInv(k,v){
+  invValues[k]=v;
+  var el=function(id){return document.getElementById(id)};
+  if(el('inv'+k))el('inv'+k).textContent='$'+v+'k';
+  if(el('gan'+k))el('gan'+k).textContent='$'+ganancia(k,v)+'k';
+  if(el('roi'+k))el('roi'+k).textContent=roi(k,v)+'%';
 }
- 
-function setDots(s) {
-  for (var i = 1; i <= 3; i++) {
-    var d = document.getElementById('d' + i);
-    d.className = 'dot';
-    if (i < s) d.classList.add('done');
-    else if (i === s) d.classList.add('active');
+
+function setDots(s){
+  for(var i=1;i<=3;i++){
+    var d=document.getElementById('d'+i);
+    d.className='prog-dot';
+    if(i<s)d.classList.add('done');
+    else if(i===s)d.classList.add('active');
+  }
+  for(var j=1;j<=2;j++){
+    var l=document.getElementById('l'+j);
+    l.className='prog-line';
+    if(j<s)l.classList.add('done');
   }
 }
- 
-function goStep2() {
-  var keys = Object.keys(activos).filter(function(k){ return activos[k]; });
-  var results = keys.map(function(k){
-    return { k:k, inv:invValues[k], gan:ganancia(k,invValues[k]), r:roi(k,invValues[k]) };
+
+function goStep2(){
+  var keys=Object.keys(activos).filter(function(k){return activos[k]});
+  var results=keys.map(function(k){
+    return{k:k,inv:invValues[k],gan:ganancia(k,invValues[k]),r:roi(k,invValues[k])};
   });
-  results.sort(function(a,b){ return b.r - a.r; });
-  var maxR = results[0].r;
- 
-  document.getElementById('horizonte-label').textContent = 'Proyección a ' + horizon + ' meses';
- 
-  var html = '';
-  results.forEach(function(res, i) {
-    var p      = proyectos[res.k];
-    var pct    = Math.round((res.r / maxR) * 100);
-    var isWin  = i === 0;
-    var util   = res.gan - res.inv;
-    html +=
-      '<div class="card' + (isWin ? ' winner' : '') + '">' +
-        '<div class="comp-header">' +
-          '<div>' +
-            '<span class="badge ' + p.badgeClass + '">Proyecto ' + res.k + ' — ' + p.nombre + '</span>' +
-            (isWin ? '<span class="winner-badge"><i class="ti ti-trophy"></i> Mayor ROI</span>' : '') +
-          '</div>' +
-          '<span style="font-size:13px;color:var(--text2)">ROI: ' + res.r + '%</span>' +
-        '</div>' +
-        '<div class="bar-bg"><div class="bar-fill" style="width:' + pct + '%;background:' + p.barColor + '"></div></div>' +
-        '<div class="metrics" style="margin-top:.5rem">' +
-          '<div class="metric"><div class="metric-label">Inversión</div><div class="metric-val">$' + res.inv + 'k</div></div>' +
-          '<div class="metric"><div class="metric-label">Ganancia ' + horizon + ' meses</div><div class="metric-val">$' + res.gan + 'k</div></div>' +
-          '<div class="metric"><div class="metric-label">Utilidad neta</div><div class="metric-val' + (util < 0 ? '" style="color:#A32D2D' : '') + '">$' + util + 'k</div></div>' +
-        '</div>' +
-      '</div>';
+  results.sort(function(a,b){return b.r-a.r});
+  var maxR=results[0].r;
+
+  document.getElementById('horizonte-label').textContent='Proyección a '+horizon+' meses';
+
+  var html='';
+  results.forEach(function(res,i){
+    var p=proyectos[res.k];
+    var pct=Math.round((res.r/maxR)*100);
+    var isWin=i===0;
+    var util=res.gan-res.inv;
+    html+='<div class="comp-card'+(isWin?' winner':'')+'">'+
+      '<div class="comp-header">'+
+        '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
+          '<span class="proj-badge '+p.badgeClass+'">Proyecto '+res.k+' — '+p.nombre+'</span>'+
+          (isWin?'<span class="winner-tag"><i class="ti ti-trophy" style="font-size:11px"></i> Mayor ROI</span>':'')+
+        '</div>'+
+        '<span class="roi-val">ROI '+res.r+'%</span>'+
+      '</div>'+
+      '<div class="bar-bg"><div class="bar-fill" style="width:'+pct+'%;background:'+p.barColor+'"></div></div>'+
+      '<div class="metrics" style="margin-top:.6rem">'+
+        '<div class="metric"><div class="metric-label">Inversión</div><div class="metric-val">$'+res.inv+'k</div></div>'+
+        '<div class="metric"><div class="metric-label">Ganancia</div><div class="metric-val">$'+res.gan+'k</div></div>'+
+        '<div class="metric"><div class="metric-label">Utilidad</div><div class="metric-val" style="color:'+(util>=0?'#00E5A0':'#FF5C5C')+'">$'+util+'k</div></div>'+
+      '</div>'+
+    '</div>';
   });
-  document.getElementById('comparativa').innerHTML = html;
- 
-  var ganador = proyectos[results[0].k].nombre;
-  var txt = 'Con un horizonte de ' + horizon + ' meses, el proyecto con mayor retorno es ' + ganador + ' (ROI: ' + results[0].r + '%). ';
-  txt += results.length > 1
-    ? 'Recuerda que el ROI más alto no siempre es la única variable: el capital disponible, el riesgo y la escalabilidad también importan.'
-    : 'Prueba activar más proyectos para comparar y descubrir cómo cambia la decisión según el capital invertido.';
-  document.getElementById('reflexion-txt').textContent = txt;
- 
+  document.getElementById('comparativa').innerHTML=html;
+
+  var ganador=proyectos[results[0].k].nombre;
+  var txt='Con '+horizon+' meses de horizonte, '+ganador+' obtiene el mayor ROI ('+results[0].r+'%). '+
+    (results.length>1?'Recuerda que el ROI más alto no es el único criterio: el capital disponible, el riesgo y la escalabilidad también son clave.':'Activa más proyectos para comparar y descubrir cómo cambia la decisión.');
+  document.getElementById('reflexion-txt').textContent=txt;
+
   document.getElementById('step1').classList.remove('active');
   document.getElementById('step2').classList.add('active');
   setDots(2);
 }
- 
-function goStep1() {
+
+function goStep1(){
   document.getElementById('step2').classList.remove('active');
   document.getElementById('step1').classList.add('active');
   setDots(1);
 }
- 
-function goStep3() {
-  var keys = Object.keys(activos).filter(function(k){ return activos[k]; });
-  var lines = keys.map(function(k){
-    var p = proyectos[k];
-    return 'Proyecto ' + k + ' (' + p.nombre + '): $' + invValues[k] + 'k → $' + ganancia(k,invValues[k]) + 'k en ' + horizon + ' meses (ROI ' + roi(k,invValues[k]) + '%)';
+
+function goStep3(){
+  var keys=Object.keys(activos).filter(function(k){return activos[k]});
+  var lines=keys.map(function(k){
+    var p=proyectos[k];
+    return 'Proyecto '+k+' ('+p.nombre+'): $'+invValues[k]+'k → $'+ganancia(k,invValues[k])+'k en '+horizon+' meses · ROI '+roi(k,invValues[k])+'%';
   });
- 
-  document.getElementById('resumen-final').innerHTML =
-    '<p style="font-size:12px;color:var(--text2);margin-bottom:6px"><i class="ti ti-chart-bar"></i> Resumen de tu simulación</p>' +
-    '<p style="font-size:13px;color:var(--text);line-height:1.7"><strong>Horizonte:</strong> ' + horizon + ' meses<br>' + lines.join('<br>') + '</p>';
- 
-  var conc = document.getElementById('conclusion').value.trim();
-  var cd = document.getElementById('conclusion-display');
-  if (conc) {
-    cd.innerHTML =
-      '<div class="conclusion-box">' +
-        '<p><i class="ti ti-writing"></i> Tu conclusión</p>' +
-        '<div class="text">' + conc + '</div>' +
-      '</div>';
-  } else {
-    cd.innerHTML = '';
-  }
- 
-  var shareText = 'Simulé proyectos de inversión a ' + horizon + ' meses. ' + lines.join(' | ') + '. ¿Cuál elegirías tú? #SelecciónDeProyectos';
-  var enc = encodeURIComponent(shareText);
-  document.getElementById('swa').href = 'https://wa.me/?text=' + enc;
-  document.getElementById('stw').href = 'https://twitter.com/intent/tweet?text=' + enc;
-  document.getElementById('sfb').href = 'https://www.facebook.com/sharer/sharer.php?u=https://github.com&quote=' + enc;
- 
+  document.getElementById('resumen-final').innerHTML=
+    '<strong>Horizonte:</strong> '+horizon+' meses<br>'+lines.join('<br>');
+
+  var shareText='Simulé proyectos de inversión a '+horizon+' meses. '+lines.join(' | ')+'. ¿Cuál elegirías tú? #SelecciónDeProyectos';
+  var enc=encodeURIComponent(shareText);
+  document.getElementById('swa').href='https://wa.me/?text='+enc;
+  document.getElementById('stw').href='https://twitter.com/intent/tweet?text='+enc;
+  document.getElementById('sfb').href='https://www.facebook.com/sharer/sharer.php?u=https://github.com&quote='+enc;
+
   document.getElementById('step2').classList.remove('active');
   document.getElementById('step3').classList.add('active');
   setDots(3);
 }
- 
-function reiniciar() {
-  activos    = { A:false, B:false, C:false };
-  invValues  = { A:30, B:15, C:50 };
-  horizon    = 12;
-  document.querySelectorAll('.toggle-btn').forEach(function(b){ b.classList.remove('on'); });
-  document.querySelectorAll('.horizon-btn').forEach(function(b, i){ b.classList.toggle('active', i === 1); });
-  document.getElementById('conclusion').value = '';
-  document.getElementById('proj-cards').innerHTML = '';
-  document.getElementById('btn-analizar').disabled = true;
+
+function reiniciar(){
+  activos={A:false,B:false,C:false};
+  invValues={A:30,B:15,C:50};
+  horizon=12;
+  document.querySelectorAll('.toggle-btn').forEach(function(b){b.classList.remove('on')});
+  document.querySelectorAll('.horizon-btn').forEach(function(b,i){b.classList.toggle('active',i===1)});
+  document.getElementById('proj-cards').innerHTML='';
+  document.getElementById('btn-analizar').disabled=true;
   document.getElementById('step3').classList.remove('active');
   document.getElementById('step1').classList.add('active');
   setDots(1);
@@ -514,4 +681,3 @@ function reiniciar() {
 </script>
 </body>
 </html>
- 
