@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Simulador de Selección de Proyectos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
   --navy:#0B1340;
-  --navy2:#131C52;
   --blue:#2B5CE6;
   --blue2:#4F7AFF;
   --cyan:#00D4FF;
@@ -20,7 +22,6 @@
   --amber:#FFB800;
   --coral:#FF5C5C;
   --white:#FFFFFF;
-  --off:#F0F3FF;
   --muted:#8892B8;
   --glass:rgba(255,255,255,0.06);
   --glass2:rgba(255,255,255,0.10);
@@ -57,10 +58,9 @@ body::before{
   margin:0 auto;
 }
 
-.header{
-  text-align:center;
-  padding:2rem 1rem 1.5rem;
-}
+.header{text-align:center;padding:2rem 1rem 1.5rem}
+.logo-row{display:block;margin-bottom:.9rem}
+.tag-row{display:block;margin-bottom:.85rem}
 .logo-wrap{
   display:inline-flex;
   align-items:center;
@@ -68,8 +68,7 @@ body::before{
   background:var(--glass2);
   border:1px solid var(--border);
   border-radius:16px;
-  padding:.5rem 1.25rem;
-  margin-bottom:1.25rem;
+  padding:.6rem 1.5rem;
   backdrop-filter:blur(12px);
 }
 .logo-wrap img{height:44px;object-fit:contain}
@@ -101,9 +100,8 @@ body::before{
   color:var(--cyan);
   font-size:11px;
   font-weight:500;
-  padding:3px 10px;
+  padding:4px 12px;
   border-radius:20px;
-  margin-bottom:.75rem;
   letter-spacing:.04em;
   text-transform:uppercase;
 }
@@ -115,12 +113,7 @@ body::before{
   gap:0;
   margin-bottom:2rem;
 }
-.prog-step{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-}
+.prog-step{display:flex;flex-direction:column;align-items:center;gap:4px}
 .prog-dot{
   width:32px;height:32px;
   border-radius:50%;
@@ -146,22 +139,11 @@ body::before{
 .prog-line{
   width:48px;height:2px;
   background:var(--border);
-  margin:0 -2px;
-  margin-bottom:18px;
+  margin:0 -2px 18px;
   transition:background .4s;
 }
 .prog-line.done{background:var(--green)}
 .prog-label{font-size:10px;color:var(--muted);text-align:center;letter-spacing:.03em}
-
-.card{
-  background:var(--glass);
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  padding:1.25rem;
-  backdrop-filter:blur(16px);
-  transition:border-color .2s,transform .2s,box-shadow .2s;
-}
-.card:hover{border-color:rgba(255,255,255,0.2)}
 
 .step{display:none}
 .step.active{display:block;animation:fadeUp .4s ease}
@@ -175,7 +157,14 @@ body::before{
   text-align:center;
   margin-bottom:.35rem;
 }
-.step-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:1.5rem;line-height:1.5;padding:0 .5rem}
+.step-sub{
+  font-size:13px;
+  color:var(--muted);
+  text-align:center;
+  margin-bottom:1.5rem;
+  line-height:1.5;
+  padding:0 .5rem;
+}
 
 .toggle-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
 .toggle-btn{
@@ -200,13 +189,23 @@ body::before{
 }
 
 .horizon-section{margin-bottom:1.5rem}
-.horizon-section p{font-size:12px;color:var(--muted);text-align:center;margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.06em}
+.horizon-section p{
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+  margin-bottom:.6rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
 .horizon-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 .horizon-btn{
-  padding:6px 16px;font-size:12px;font-weight:500;
+  padding:6px 16px;
+  font-size:12px;font-weight:500;
   border:1px solid var(--border);
-  background:var(--glass);color:var(--muted);
-  border-radius:30px;cursor:pointer;
+  background:var(--glass);
+  color:var(--muted);
+  border-radius:30px;
+  cursor:pointer;
   transition:all .25s;
   font-family:'DM Sans',sans-serif;
 }
@@ -217,7 +216,12 @@ body::before{
   color:var(--cyan);
 }
 
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:1.5rem}
+.proj-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+  margin-bottom:1.5rem;
+}
 
 .proj-card{
   background:var(--glass);
@@ -241,30 +245,62 @@ body::before{
   font-size:10px;font-weight:600;
   padding:2px 8px;border-radius:20px;
   letter-spacing:.03em;text-transform:uppercase;
-  margin-left:6px;
 }
 .risk-low{background:rgba(0,229,160,0.10);color:var(--green);border:1px solid rgba(0,229,160,0.2)}
 .risk-med{background:rgba(255,184,0,0.10);color:var(--amber);border:1px solid rgba(255,184,0,0.2)}
 .risk-high{background:rgba(255,92,92,0.10);color:var(--coral);border:1px solid rgba(255,92,92,0.2)}
 
-.badge-row{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:.75rem}
+.badge-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:.75rem}
 
-.proj-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:.85rem}
+.proj-name{
+  font-family:'Syne',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  color:var(--white);
+  margin-bottom:.85rem;
+}
 
 .slider-row{display:flex;align-items:center;gap:8px;margin-bottom:.85rem}
-.slider-row label{font-size:11px;color:var(--muted);min-width:60px;text-transform:uppercase;letter-spacing:.04em}
+.slider-row label{
+  font-size:11px;
+  color:var(--muted);
+  min-width:60px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
 .slider-row input[type=range]{
   flex:1;
   -webkit-appearance:none;
+  appearance:none;
   height:4px;
   border-radius:2px;
   background:var(--border);
   outline:none;
 }
-.slider-a input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--green);cursor:pointer;box-shadow:0 0 8px rgba(0,229,160,0.5)}
-.slider-b input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--amber);cursor:pointer;box-shadow:0 0 8px rgba(255,184,0,0.5)}
-.slider-c input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--blue2);cursor:pointer;box-shadow:0 0 8px rgba(79,122,255,0.5)}
-.slider-val{font-size:13px;font-weight:600;min-width:44px;text-align:right;color:var(--white);font-family:'Syne',sans-serif}
+.slider-a input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--green);cursor:pointer;
+  box-shadow:0 0 8px rgba(0,229,160,0.5);
+}
+.slider-b input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--amber);cursor:pointer;
+  box-shadow:0 0 8px rgba(255,184,0,0.5);
+}
+.slider-c input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--blue2);cursor:pointer;
+  box-shadow:0 0 8px rgba(79,122,255,0.5);
+}
+.slider-val{
+  font-size:13px;font-weight:600;
+  min-width:44px;text-align:right;
+  color:var(--white);
+  font-family:'Syne',sans-serif;
+}
 
 .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .metric{
@@ -273,8 +309,20 @@ body::before{
   border-radius:var(--radius);
   padding:.5rem .6rem;
 }
-.metric-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
-.metric-val{font-size:14px;font-weight:700;color:var(--white);font-family:'Syne',sans-serif;line-height:1.1}
+.metric-label{
+  font-size:9px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  margin-bottom:2px;
+}
+.metric-val{
+  font-size:14px;
+  font-weight:700;
+  color:var(--white);
+  font-family:'Syne',sans-serif;
+  line-height:1.1;
+}
 .metric-val.neg{color:var(--coral)}
 .metric-val.pos{color:var(--green)}
 
@@ -282,21 +330,32 @@ body::before{
   background:linear-gradient(135deg,var(--blue),var(--blue2));
   color:var(--white);border:none;
   border-radius:40px;
-  padding:11px 32px;font-size:14px;font-weight:500;
-  cursor:pointer;transition:all .25s;
+  padding:11px 32px;
+  font-size:14px;font-weight:500;
+  cursor:pointer;
+  transition:all .25s;
   display:inline-flex;align-items:center;gap:7px;
   font-family:'DM Sans',sans-serif;
   box-shadow:0 4px 24px rgba(43,92,230,0.35);
 }
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(43,92,230,0.5)}
-.btn-primary:disabled{background:var(--glass);box-shadow:none;color:var(--muted);cursor:not-allowed;transform:none}
+.btn-primary:disabled{
+  background:var(--glass);
+  box-shadow:none;
+  color:var(--muted);
+  cursor:not-allowed;
+  transform:none;
+}
 .btn-primary.big{padding:14px 40px;font-size:15px;font-weight:600}
 
 .btn-ghost{
-  background:var(--glass);color:var(--muted);
+  background:var(--glass);
+  color:var(--muted);
   border:1px solid var(--border);
-  border-radius:40px;padding:10px 22px;
-  font-size:13px;cursor:pointer;
+  border-radius:40px;
+  padding:10px 22px;
+  font-size:13px;
+  cursor:pointer;
   transition:all .25s;
   display:inline-flex;align-items:center;gap:6px;
   font-family:'DM Sans',sans-serif;
@@ -317,8 +376,15 @@ body::before{
 }
 .comp-card.winner{border-color:var(--green);box-shadow:0 0 30px rgba(0,229,160,0.12)}
 .comp-card.loser{opacity:.85}
-.comp-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:.75rem}
-.comp-header-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.comp-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:.75rem;
+}
+.comp-header-left{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .winner-tag{
   background:rgba(0,229,160,0.12);
   border:1px solid rgba(0,229,160,0.3);
@@ -331,9 +397,14 @@ body::before{
 .roi-val.neg{color:var(--coral)}
 .roi-val.pos{color:var(--green)}
 
-.bar-bg{background:rgba(255,255,255,0.08);border-radius:4px;height:6px;margin:.5rem 0;overflow:hidden}
+.bar-bg{
+  background:rgba(255,255,255,0.08);
+  border-radius:4px;
+  height:6px;
+  margin:.5rem 0;
+  overflow:hidden;
+}
 .bar-fill{height:6px;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1)}
-.bar-fill.neg{background:var(--coral) !important}
 
 .comp-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:.7rem}
 
@@ -344,7 +415,13 @@ body::before{
   padding:1rem 1.1rem;
   margin-bottom:1.25rem;
 }
-.info-box-title{font-size:12px;font-weight:600;color:var(--blue2);margin-bottom:.4rem;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.05em}
+.info-box-title{
+  font-size:12px;font-weight:600;
+  color:var(--blue2);
+  margin-bottom:.4rem;
+  display:flex;align-items:center;gap:5px;
+  text-transform:uppercase;letter-spacing:.05em;
+}
 .info-box p{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6}
 
 .cierre-box{
@@ -361,10 +438,15 @@ body::before{
 .share-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
 .share-btn{
   display:inline-flex;align-items:center;gap:6px;
-  border:1px solid var(--border);border-radius:30px;
-  padding:8px 18px;font-size:13px;font-weight:500;
-  cursor:pointer;background:var(--glass);color:var(--white);
-  text-decoration:none;transition:all .25s;
+  border:1px solid var(--border);
+  border-radius:30px;
+  padding:8px 18px;
+  font-size:13px;font-weight:500;
+  cursor:pointer;
+  background:var(--glass);
+  color:var(--white);
+  text-decoration:none;
+  transition:all .25s;
   font-family:'DM Sans',sans-serif;
   backdrop-filter:blur(8px);
 }
@@ -376,22 +458,64 @@ body::before{
   border-radius:var(--radius-lg);
   padding:1.1rem 1.25rem;
   margin-bottom:1.25rem;
-  font-size:13px;color:var(--muted);line-height:1.8;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.8;
 }
 .resumen-box strong{color:var(--white)}
 .resumen-box .neg{color:var(--coral)}
 .resumen-box .pos{color:var(--green)}
 
+.guia-box{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:1.25rem;
+  margin-top:2rem;
+  backdrop-filter:blur(16px);
+}
+.guia-title{
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  color:var(--cyan);
+  margin-bottom:1rem;
+  display:flex;align-items:center;gap:6px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.guia-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.guia-item{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:.85rem;
+}
+.guia-label{
+  font-family:'Syne',sans-serif;
+  font-size:13px;font-weight:700;
+  color:var(--white);
+  margin-bottom:.4rem;
+  letter-spacing:.02em;
+  display:flex;align-items:center;gap:5px;
+}
+.guia-item p{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.55;
+}
+
 .footer{
   border-top:1px solid var(--border);
-  margin-top:2rem;padding-top:.875rem;
+  margin-top:2rem;
+  padding-top:.875rem;
   text-align:center;
-  font-size:11px;color:var(--muted);
+  font-size:11px;
+  color:var(--muted);
   letter-spacing:.03em;
   line-height:1.6;
 }
 
-/* Responsividad */
 @media(max-width:600px){
   .header{padding:1.5rem .5rem 1rem}
   .logo-wrap{padding:.4rem 1rem;margin-bottom:1rem}
@@ -407,11 +531,12 @@ body::before{
   .comp-metrics{grid-template-columns:repeat(2,1fr)}
   .btn-primary{padding:10px 24px;font-size:13px}
   .btn-primary.big{padding:12px 30px;font-size:14px}
+  .guia-grid{grid-template-columns:1fr;gap:8px}
 }
 
 @media(max-width:420px){
   body{padding:.5rem}
-  .card,.proj-card,.comp-card{padding:.9rem}
+  .proj-card,.comp-card{padding:.9rem}
   .toggle-row{flex-direction:column;align-items:stretch}
   .toggle-btn{justify-content:center}
   .horizon-btns{gap:6px}
@@ -423,7 +548,6 @@ body::before{
   .metric{padding:.4rem .5rem}
   .metric-val{font-size:13px}
   .metric-label{font-size:8px}
-  .comp-metrics{grid-template-columns:repeat(2,1fr)}
   .slider-row label{min-width:50px;font-size:10px}
   .slider-val{min-width:40px;font-size:12px}
   .proj-name{font-size:14px}
@@ -434,15 +558,19 @@ body::before{
 <div class="wrap">
 
   <div class="header">
-    <div class="logo-wrap">
-      <img src="https://i.postimg.cc/FKz4sz2C/logoutelsinfondo.png" alt="Logo universidad">
+    <div class="logo-row">
+      <div class="logo-wrap">
+        <img src="https://i.postimg.cc/FKz4sz2C/logoutelsinfondo.png" alt="Logo universidad">
+      </div>
     </div>
-    <div class="tag"><i class="ti ti-chart-bar"></i> Semana 1</div>
+    <div class="tag-row">
+      <div class="tag"><i class="ti ti-chart-bar"></i> Semana 1</div>
+    </div>
     <h1>Simulador de Selección<br>de Proyectos</h1>
     <p>Compara proyectos con distintos niveles de rentabilidad, riesgo y tiempo de recuperación.</p>
   </div>
 
-  <div class="progress" id="progress">
+  <div class="progress">
     <div class="prog-step">
       <div class="prog-dot active" id="d1">1</div>
       <div class="prog-label">Configura</div>
@@ -459,19 +587,18 @@ body::before{
     </div>
   </div>
 
-  <!-- PASO 1 -->
   <div class="step active" id="step1">
     <p class="step-title">¿Cuántos proyectos analizas?</p>
     <p class="step-sub">Activa uno, dos o los tres y ajusta cuánto inviertes en cada uno</p>
 
     <div class="toggle-row">
-      <button class="toggle-btn" id="togA" onclick="toggleProj('A')">
+      <button type="button" class="toggle-btn" data-proj="A">
         <i class="ti ti-building-store"></i> Cafetería
       </button>
-      <button class="toggle-btn" id="togB" onclick="toggleProj('B')">
+      <button type="button" class="toggle-btn" data-proj="B">
         <i class="ti ti-device-laptop"></i> Tienda en línea
       </button>
-      <button class="toggle-btn" id="togC" onclick="toggleProj('C')">
+      <button type="button" class="toggle-btn" data-proj="C">
         <i class="ti ti-wash-dryclean"></i> Lavandería
       </button>
     </div>
@@ -479,23 +606,22 @@ body::before{
     <div class="horizon-section">
       <p>Horizonte de análisis</p>
       <div class="horizon-btns">
-        <button class="horizon-btn" onclick="setHorizon(6,this)">6 meses</button>
-        <button class="horizon-btn active" onclick="setHorizon(12,this)">1 año</button>
-        <button class="horizon-btn" onclick="setHorizon(18,this)">18 meses</button>
-        <button class="horizon-btn" onclick="setHorizon(24,this)">2 años</button>
+        <button type="button" class="horizon-btn" data-horizon="6">6 meses</button>
+        <button type="button" class="horizon-btn active" data-horizon="12">1 año</button>
+        <button type="button" class="horizon-btn" data-horizon="18">18 meses</button>
+        <button type="button" class="horizon-btn" data-horizon="24">2 años</button>
       </div>
     </div>
 
     <div class="proj-grid" id="proj-cards"></div>
 
     <div style="text-align:center">
-      <button class="btn-primary" id="btn-analizar" onclick="goStep2()" disabled>
+      <button type="button" class="btn-primary" id="btn-analizar" disabled>
         Ver análisis <i class="ti ti-arrow-right"></i>
       </button>
     </div>
   </div>
 
-  <!-- PASO 2 -->
   <div class="step" id="step2">
     <p class="step-title">Comparativa</p>
     <p class="step-sub" id="horizonte-label">Proyección a 12 meses</p>
@@ -508,16 +634,15 @@ body::before{
     </div>
 
     <div class="btn-row">
-      <button class="btn-ghost" onclick="goStep1()">
+      <button type="button" class="btn-ghost" id="btn-ajustar">
         <i class="ti ti-arrow-left"></i> Ajustar
       </button>
-      <button class="btn-primary" onclick="goStep3()">
+      <button type="button" class="btn-primary" id="btn-compartir">
         Compartir resultado <i class="ti ti-share"></i>
       </button>
     </div>
   </div>
 
-  <!-- PASO 3 -->
   <div class="step" id="step3">
     <p class="step-title">Tu resultado</p>
     <p class="step-sub">Así quedó tu simulación</p>
@@ -533,21 +658,39 @@ body::before{
 
     <p style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em">Comparte con tus compañeros</p>
     <div class="share-row">
-      <a id="swa" class="share-btn" target="_blank">
+      <a id="swa" class="share-btn" target="_blank" rel="noopener">
         <i class="ti ti-brand-whatsapp" style="font-size:17px;color:#25D366"></i> WhatsApp
       </a>
-      <a id="stw" class="share-btn" target="_blank">
+      <a id="stw" class="share-btn" target="_blank" rel="noopener">
         <i class="ti ti-brand-x" style="font-size:17px"></i> Twitter/X
       </a>
-      <a id="sfb" class="share-btn" target="_blank">
+      <a id="sfb" class="share-btn" target="_blank" rel="noopener">
         <i class="ti ti-brand-facebook" style="font-size:17px;color:#4F9CF9"></i> Facebook
       </a>
     </div>
 
     <div style="text-align:center">
-      <button class="btn-primary big" onclick="reiniciar()">
+      <button type="button" class="btn-primary big" id="btn-reiniciar">
         <i class="ti ti-refresh"></i> Simular de nuevo
       </button>
+    </div>
+  </div>
+
+  <div class="guia-box">
+    <div class="guia-title"><i class="ti ti-info-circle"></i> Guía rápida de las métricas</div>
+    <div class="guia-grid">
+      <div class="guia-item">
+        <div class="guia-label"><i class="ti ti-trending-up" style="color:var(--green);font-size:15px"></i> ROI</div>
+        <p>Retorno sobre la inversión. Mide cuánto ganas por cada peso invertido. Positivo significa que ya recuperaste la inversión y hay utilidad.</p>
+      </div>
+      <div class="guia-item">
+        <div class="guia-label"><i class="ti ti-clock-hour-4" style="color:var(--amber);font-size:15px"></i> Payback</div>
+        <p>Tiempo estimado para recuperar la inversión inicial. Cuanto menor sea, más rápido el proyecto deja de operar en pérdida.</p>
+      </div>
+      <div class="guia-item">
+        <div class="guia-label"><i class="ti ti-shield" style="color:var(--blue2);font-size:15px"></i> Riesgo</div>
+        <p>Nivel de incertidumbre del proyecto. A mayor riesgo, mayor probabilidad de que las proyecciones no se cumplan como se esperan.</p>
+      </div>
     </div>
   </div>
 
@@ -559,11 +702,355 @@ body::before{
 </div>
 
 <script>
-/*
- Modelo financiero:
- - tasaMensual: ingreso neto mensual como fracción de la inversión (ya con costos operativos descontados)
- - rampUp: meses iniciales en que el proyecto opera al 50% de capacidad
- - riesgoFactor: multiplicador que penaliza el rendimiento esperado por riesgo del proyecto
- 
- Fórmulas:
- - Ganancia total = inv * tasaMensual *
+(function(){
+  'use strict';
+
+  var proyectos = {
+    A: {
+      nombre: 'Cafetería',
+      badgeClass: 'badge-a',
+      sliderClass: 'slider-a',
+      invMin: 15, invMax: 50, invDef: 25,
+      tasaMensual: 0.12,
+      rampUp: 2,
+      riesgoFactor: 0.90,
+      riesgoLabel: 'Medio',
+      riesgoClass: 'risk-med',
+      barColor: '#00E5A0'
+    },
+    B: {
+      nombre: 'Tienda en linea',
+      badgeClass: 'badge-b',
+      sliderClass: 'slider-b',
+      invMin: 5, invMax: 30, invDef: 12,
+      tasaMensual: 0.18,
+      rampUp: 4,
+      riesgoFactor: 0.75,
+      riesgoLabel: 'Alto',
+      riesgoClass: 'risk-high',
+      barColor: '#FFB800'
+    },
+    C: {
+      nombre: 'Lavanderia',
+      badgeClass: 'badge-c',
+      sliderClass: 'slider-c',
+      invMin: 30, invMax: 80, invDef: 55,
+      tasaMensual: 0.08,
+      rampUp: 1,
+      riesgoFactor: 0.95,
+      riesgoLabel: 'Bajo',
+      riesgoClass: 'risk-low',
+      barColor: '#4F7AFF'
+    }
+  };
+
+  var activos = { A: false, B: false, C: false };
+  var invValues = { A: 25, B: 12, C: 55 };
+  var horizon = 12;
+
+  function mesesEfectivos(k){
+    var p = proyectos[k];
+    if(horizon <= p.rampUp) return horizon * 0.5;
+    return p.rampUp * 0.5 + (horizon - p.rampUp);
+  }
+
+  function ganancia(k, inv){
+    var p = proyectos[k];
+    return Math.round(inv * p.tasaMensual * mesesEfectivos(k) * p.riesgoFactor);
+  }
+
+  function utilidad(k, inv){
+    return ganancia(k, inv) - inv;
+  }
+
+  function roi(k, inv){
+    if(inv <= 0) return 0;
+    return Math.round((utilidad(k, inv) / inv) * 100);
+  }
+
+  function payback(k, inv){
+    var p = proyectos[k];
+    var ingMes = inv * p.tasaMensual * p.riesgoFactor;
+    if(ingMes <= 0) return '-';
+    var ingRamp = ingMes * 0.5;
+    var accum = 0;
+    for(var m = 1; m <= 60; m++){
+      accum += (m <= p.rampUp) ? ingRamp : ingMes;
+      if(accum >= inv) return m + ' m';
+    }
+    return '>60 m';
+  }
+
+  function toggleProj(k){
+    activos[k] = !activos[k];
+    var btn = document.getElementById('tog' + k);
+    if(btn) btn.classList.toggle('on', activos[k]);
+    renderCards();
+    var alguno = activos.A || activos.B || activos.C;
+    document.getElementById('btn-analizar').disabled = !alguno;
+  }
+
+  function setHorizon(h, btn){
+    horizon = h;
+    var btns = document.querySelectorAll('.horizon-btn');
+    for(var i = 0; i < btns.length; i++){
+      btns[i].classList.remove('active');
+    }
+    btn.classList.add('active');
+    renderCards();
+  }
+
+  function renderCards(){
+    var container = document.getElementById('proj-cards');
+    var html = '';
+    var keys = ['A', 'B', 'C'];
+    for(var i = 0; i < keys.length; i++){
+      var k = keys[i];
+      if(!activos[k]) continue;
+      var p = proyectos[k];
+      var inv = invValues[k];
+      var util = utilidad(k, inv);
+      var r = roi(k, inv);
+      var pb = payback(k, inv);
+      var utilClass = util >= 0 ? 'pos' : 'neg';
+      var roiClass = r >= 0 ? '' : 'neg';
+
+      html += '<div class="proj-card">';
+      html += '<div class="badge-row">';
+      html += '<span class="proj-badge ' + p.badgeClass + '">Proyecto ' + k + '</span>';
+      html += '<span class="risk-badge ' + p.riesgoClass + '"><i class="ti ti-shield"></i> Riesgo ' + p.riesgoLabel + '</span>';
+      html += '</div>';
+      html += '<div class="proj-name">' + p.nombre + '</div>';
+      html += '<div class="slider-row ' + p.sliderClass + '">';
+      html += '<label>Inversion</label>';
+      html += '<input type="range" min="' + p.invMin + '" max="' + p.invMax + '" step="1" value="' + inv + '" data-slider="' + k + '">';
+      html += '<span class="slider-val" id="inv' + k + '">$' + inv + 'k</span>';
+      html += '</div>';
+      html += '<div class="metrics">';
+      html += '<div class="metric"><div class="metric-label">Utilidad</div><div class="metric-val ' + utilClass + '" id="util' + k + '">$' + util + 'k</div></div>';
+      html += '<div class="metric"><div class="metric-label">ROI</div><div class="metric-val ' + roiClass + '" id="roi' + k + '">' + r + '%</div></div>';
+      html += '<div class="metric"><div class="metric-label">Payback</div><div class="metric-val" id="pb' + k + '">' + pb + '</div></div>';
+      html += '</div>';
+      html += '</div>';
+    }
+    container.innerHTML = html;
+
+    var sliders = container.querySelectorAll('input[type=range]');
+    for(var j = 0; j < sliders.length; j++){
+      sliders[j].addEventListener('input', function(e){
+        var key = e.target.getAttribute('data-slider');
+        updInv(key, +e.target.value);
+      });
+    }
+  }
+
+  function updInv(k, v){
+    invValues[k] = v;
+    var util = utilidad(k, v);
+    var r = roi(k, v);
+    var pb = payback(k, v);
+    var elInv = document.getElementById('inv' + k);
+    var elUtil = document.getElementById('util' + k);
+    var elRoi = document.getElementById('roi' + k);
+    var elPb = document.getElementById('pb' + k);
+    if(elInv) elInv.textContent = '$' + v + 'k';
+    if(elUtil){
+      elUtil.textContent = '$' + util + 'k';
+      elUtil.className = 'metric-val ' + (util >= 0 ? 'pos' : 'neg');
+    }
+    if(elRoi){
+      elRoi.textContent = r + '%';
+      elRoi.className = 'metric-val ' + (r >= 0 ? '' : 'neg');
+    }
+    if(elPb) elPb.textContent = pb;
+  }
+
+  function setDots(s){
+    for(var i = 1; i <= 3; i++){
+      var d = document.getElementById('d' + i);
+      d.className = 'prog-dot';
+      if(i < s) d.classList.add('done');
+      else if(i === s) d.classList.add('active');
+    }
+    for(var j = 1; j <= 2; j++){
+      var l = document.getElementById('l' + j);
+      l.className = 'prog-line';
+      if(j < s) l.classList.add('done');
+    }
+  }
+
+  function irStep(n){
+    var steps = document.querySelectorAll('.step');
+    for(var i = 0; i < steps.length; i++) steps[i].classList.remove('active');
+    document.getElementById('step' + n).classList.add('active');
+    setDots(n);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function analizar(){
+    var keys = [];
+    if(activos.A) keys.push('A');
+    if(activos.B) keys.push('B');
+    if(activos.C) keys.push('C');
+
+    var results = [];
+    for(var i = 0; i < keys.length; i++){
+      var k = keys[i];
+      results.push({
+        k: k,
+        inv: invValues[k],
+        gan: ganancia(k, invValues[k]),
+        util: utilidad(k, invValues[k]),
+        r: roi(k, invValues[k]),
+        pb: payback(k, invValues[k])
+      });
+    }
+    results.sort(function(a, b){ return b.r - a.r; });
+
+    var maxR = results[0].r;
+    var minR = results[results.length - 1].r;
+    var rango = (maxR - minR) || 1;
+
+    document.getElementById('horizonte-label').textContent = 'Proyeccion a ' + horizon + ' meses';
+
+    var html = '';
+    for(var j = 0; j < results.length; j++){
+      var res = results[j];
+      var p = proyectos[res.k];
+      var pct;
+      if(maxR <= 0){
+        pct = Math.max(10, Math.round(((res.r - minR) / rango) * 100));
+      } else {
+        pct = res.r > 0 ? Math.max(8, Math.round((res.r / maxR) * 100)) : 8;
+      }
+      var isWin = j === 0;
+      var utilClass = res.util >= 0 ? 'pos' : 'neg';
+      var roiClass = res.r >= 0 ? 'pos' : 'neg';
+
+      html += '<div class="comp-card' + (isWin ? ' winner' : '') + (res.r < 0 ? ' loser' : '') + '">';
+      html += '<div class="comp-header">';
+      html += '<div class="comp-header-left">';
+      html += '<span class="proj-badge ' + p.badgeClass + '">Proyecto ' + res.k + ': ' + p.nombre + '</span>';
+      html += '<span class="risk-badge ' + p.riesgoClass + '"><i class="ti ti-shield"></i> ' + p.riesgoLabel + '</span>';
+      if(isWin && res.r >= 0){
+        html += '<span class="winner-tag"><i class="ti ti-trophy" style="font-size:11px"></i> Mayor ROI</span>';
+      }
+      html += '</div>';
+      html += '<span class="roi-val ' + roiClass + '">ROI ' + res.r + '%</span>';
+      html += '</div>';
+      html += '<div class="bar-bg"><div class="bar-fill" style="width:' + pct + '%;background:' + (res.r < 0 ? '#FF5C5C' : p.barColor) + '"></div></div>';
+      html += '<div class="comp-metrics">';
+      html += '<div class="metric"><div class="metric-label">Inversion</div><div class="metric-val">$' + res.inv + 'k</div></div>';
+      html += '<div class="metric"><div class="metric-label">Ganancia</div><div class="metric-val">$' + res.gan + 'k</div></div>';
+      html += '<div class="metric"><div class="metric-label">Utilidad</div><div class="metric-val ' + utilClass + '">$' + res.util + 'k</div></div>';
+      html += '<div class="metric"><div class="metric-label">Payback</div><div class="metric-val">' + res.pb + '</div></div>';
+      html += '</div>';
+      html += '</div>';
+    }
+    document.getElementById('comparativa').innerHTML = html;
+
+    var ganador = results[0];
+    var ganadorNombre = proyectos[ganador.k].nombre;
+    var todosNegativos = true;
+    var algunoNegativo = false;
+    for(var m = 0; m < results.length; m++){
+      if(results[m].util >= 0) todosNegativos = false;
+      if(results[m].util < 0) algunoNegativo = true;
+    }
+
+    var txt;
+    if(todosNegativos){
+      txt = 'En ' + horizon + ' meses ningun proyecto recupera la inversion. El horizonte de analisis es clave: un proyecto rentable a 24 meses puede parecer un mal negocio a 6. Prueba con un horizonte mas largo.';
+    } else if(algunoNegativo){
+      var perdedores = [];
+      for(var n = 0; n < results.length; n++){
+        if(results[n].util < 0) perdedores.push(proyectos[results[n].k].nombre);
+      }
+      txt = ganadorNombre + ' lidera con ROI de ' + ganador.r + '% y payback de ' + ganador.pb + '. ' + perdedores.join(' y ') + ' aun no recupera la inversion en este horizonte. Un ROI negativo hoy no significa mal proyecto, sino horizonte insuficiente.';
+    } else if(results.length > 1){
+      var esRiesgoAlto = proyectos[ganador.k].riesgoLabel === 'Alto';
+      if(esRiesgoAlto){
+        txt = ganadorNombre + ' obtiene el mayor ROI (' + ganador.r + '%), pero es tambien el de mayor riesgo. Los metodos de ponderacion permiten decidir cuanto peso dar al retorno frente a la seguridad de la inversion.';
+      } else {
+        txt = ganadorNombre + ' lidera con ROI de ' + ganador.r + '% y payback de ' + ganador.pb + '. El ROI mas alto no siempre coincide con el menor riesgo ni el payback mas rapido. Ahi es donde entra la ponderacion de criterios.';
+      }
+    } else {
+      txt = 'Con este unico proyecto obtienes un ROI de ' + ganador.r + '% en ' + horizon + ' meses. Activa mas proyectos para comparar y ver como cambia la decision segun el criterio que pese mas.';
+    }
+    document.getElementById('reflexion-txt').textContent = txt;
+
+    irStep(2);
+  }
+
+  function compartir(){
+    var keys = [];
+    if(activos.A) keys.push('A');
+    if(activos.B) keys.push('B');
+    if(activos.C) keys.push('C');
+
+    var lines = [];
+    var shareLines = [];
+    for(var i = 0; i < keys.length; i++){
+      var k = keys[i];
+      var p = proyectos[k];
+      var u = utilidad(k, invValues[k]);
+      var r = roi(k, invValues[k]);
+      var uClass = u >= 0 ? 'pos' : 'neg';
+      var rClass = r >= 0 ? 'pos' : 'neg';
+      lines.push('Proyecto ' + k + ' (' + p.nombre + '): inv $' + invValues[k] + 'k, utilidad <span class="' + uClass + '">$' + u + 'k</span>, ROI <span class="' + rClass + '">' + r + '%</span>, payback ' + payback(k, invValues[k]) + ', riesgo ' + p.riesgoLabel);
+      shareLines.push(p.nombre + ' inv $' + invValues[k] + 'k, ROI ' + r + '%, payback ' + payback(k, invValues[k]));
+    }
+    document.getElementById('resumen-final').innerHTML = '<strong>Horizonte:</strong> ' + horizon + ' meses<br><br>' + lines.join('<br>');
+
+    var shareText = 'Simule seleccion de proyectos a ' + horizon + ' meses. ' + shareLines.join(' | ') + '. Cual elegirias tu? #SeleccionDeProyectos';
+    var enc = encodeURIComponent(shareText);
+    document.getElementById('swa').href = 'https://wa.me/?text=' + enc;
+    document.getElementById('stw').href = 'https://twitter.com/intent/tweet?text=' + enc;
+    document.getElementById('sfb').href = 'https://www.facebook.com/sharer/sharer.php?u=https://utel.edu.mx&quote=' + enc;
+
+    irStep(3);
+  }
+
+  function reiniciar(){
+    activos = { A: false, B: false, C: false };
+    invValues = { A: 25, B: 12, C: 55 };
+    horizon = 12;
+    var toggles = document.querySelectorAll('.toggle-btn');
+    for(var i = 0; i < toggles.length; i++) toggles[i].classList.remove('on');
+    var hbtns = document.querySelectorAll('.horizon-btn');
+    for(var j = 0; j < hbtns.length; j++){
+      hbtns[j].classList.toggle('active', hbtns[j].getAttribute('data-horizon') === '12');
+    }
+    document.getElementById('proj-cards').innerHTML = '';
+    document.getElementById('btn-analizar').disabled = true;
+    irStep(1);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var toggleBtns = document.querySelectorAll('.toggle-btn');
+    for(var i = 0; i < toggleBtns.length; i++){
+      var btn = toggleBtns[i];
+      btn.id = 'tog' + btn.getAttribute('data-proj');
+      btn.addEventListener('click', function(e){
+        var k = e.currentTarget.getAttribute('data-proj');
+        toggleProj(k);
+      });
+    }
+
+    var horizonBtns = document.querySelectorAll('.horizon-btn');
+    for(var j = 0; j < horizonBtns.length; j++){
+      horizonBtns[j].addEventListener('click', function(e){
+        var h = parseInt(e.currentTarget.getAttribute('data-horizon'), 10);
+        setHorizon(h, e.currentTarget);
+      });
+    }
+
+    document.getElementById('btn-analizar').addEventListener('click', analizar);
+    document.getElementById('btn-ajustar').addEventListener('click', function(){ irStep(1); });
+    document.getElementById('btn-compartir').addEventListener('click', compartir);
+    document.getElementById('btn-reiniciar').addEventListener('click', reiniciar);
+  });
+})();
+</script>
+</body>
+</html>
