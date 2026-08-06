@@ -38,7 +38,6 @@ body{
   overflow-x:hidden;
 }
 
-/* Fondo animado */
 body::before{
   content:'';
   position:fixed;
@@ -54,11 +53,10 @@ body::before{
 .wrap{
   position:relative;
   z-index:1;
-  max-width:700px;
+  max-width:720px;
   margin:0 auto;
 }
 
-/* Header */
 .header{
   text-align:center;
   padding:2rem 1rem 1.5rem;
@@ -77,7 +75,7 @@ body::before{
 .logo-wrap img{height:44px;object-fit:contain}
 .header h1{
   font-family:'Syne',sans-serif;
-  font-size:clamp(1.5rem,4vw,2.2rem);
+  font-size:clamp(1.4rem,4.5vw,2.2rem);
   font-weight:800;
   line-height:1.15;
   letter-spacing:-0.03em;
@@ -90,7 +88,7 @@ body::before{
 .header p{
   font-size:13px;
   color:var(--muted);
-  max-width:380px;
+  max-width:420px;
   margin-inline:auto;
   line-height:1.6;
 }
@@ -110,7 +108,6 @@ body::before{
   text-transform:uppercase;
 }
 
-/* Progress */
 .progress{
   display:flex;
   align-items:center;
@@ -156,7 +153,6 @@ body::before{
 .prog-line.done{background:var(--green)}
 .prog-label{font-size:10px;color:var(--muted);text-align:center;letter-spacing:.03em}
 
-/* Card base */
 .card{
   background:var(--glass);
   border:1px solid var(--border);
@@ -167,7 +163,6 @@ body::before{
 }
 .card:hover{border-color:rgba(255,255,255,0.2)}
 
-/* Step */
 .step{display:none}
 .step.active{display:block;animation:fadeUp .4s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
@@ -180,9 +175,8 @@ body::before{
   text-align:center;
   margin-bottom:.35rem;
 }
-.step-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:1.5rem;line-height:1.5}
+.step-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:1.5rem;line-height:1.5;padding:0 .5rem}
 
-/* Toggle buttons */
 .toggle-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
 .toggle-btn{
   border:1px solid var(--border);
@@ -205,7 +199,6 @@ body::before{
   box-shadow:0 4px 20px rgba(43,92,230,0.4);
 }
 
-/* Horizon */
 .horizon-section{margin-bottom:1.5rem}
 .horizon-section p{font-size:12px;color:var(--muted);text-align:center;margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.06em}
 .horizon-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
@@ -224,8 +217,7 @@ body::before{
   color:var(--cyan);
 }
 
-/* Project cards */
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:1.5rem}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:1.5rem}
 
 .proj-card{
   background:var(--glass);
@@ -238,17 +230,28 @@ body::before{
   display:inline-flex;align-items:center;gap:5px;
   font-size:11px;font-weight:600;
   padding:3px 10px;border-radius:20px;
-  margin-bottom:.75rem;
   letter-spacing:.03em;text-transform:uppercase;
 }
 .badge-a{background:rgba(0,229,160,0.12);color:var(--green);border:1px solid rgba(0,229,160,0.25)}
 .badge-b{background:rgba(255,184,0,0.12);color:var(--amber);border:1px solid rgba(255,184,0,0.25)}
 .badge-c{background:rgba(79,122,255,0.12);color:var(--blue2);border:1px solid rgba(79,122,255,0.25)}
 
+.risk-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:600;
+  padding:2px 8px;border-radius:20px;
+  letter-spacing:.03em;text-transform:uppercase;
+  margin-left:6px;
+}
+.risk-low{background:rgba(0,229,160,0.10);color:var(--green);border:1px solid rgba(0,229,160,0.2)}
+.risk-med{background:rgba(255,184,0,0.10);color:var(--amber);border:1px solid rgba(255,184,0,0.2)}
+.risk-high{background:rgba(255,92,92,0.10);color:var(--coral);border:1px solid rgba(255,92,92,0.2)}
+
+.badge-row{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:.75rem}
+
 .proj-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:.85rem}
 
-/* Slider */
-.slider-row{display:flex;align-items:center;gap:8px;margin-bottom:.75rem}
+.slider-row{display:flex;align-items:center;gap:8px;margin-bottom:.85rem}
 .slider-row label{font-size:11px;color:var(--muted);min-width:60px;text-transform:uppercase;letter-spacing:.04em}
 .slider-row input[type=range]{
   flex:1;
@@ -258,23 +261,23 @@ body::before{
   background:var(--border);
   outline:none;
 }
-.slider-a input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--green);cursor:pointer;box-shadow:0 0 8px rgba(0,229,160,0.5)}
-.slider-b input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--amber);cursor:pointer;box-shadow:0 0 8px rgba(255,184,0,0.5)}
-.slider-c input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue2);cursor:pointer;box-shadow:0 0 8px rgba(79,122,255,0.5)}
-.slider-val{font-size:13px;font-weight:600;min-width:40px;text-align:right;color:var(--white);font-family:'Syne',sans-serif}
+.slider-a input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--green);cursor:pointer;box-shadow:0 0 8px rgba(0,229,160,0.5)}
+.slider-b input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--amber);cursor:pointer;box-shadow:0 0 8px rgba(255,184,0,0.5)}
+.slider-c input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--blue2);cursor:pointer;box-shadow:0 0 8px rgba(79,122,255,0.5)}
+.slider-val{font-size:13px;font-weight:600;min-width:44px;text-align:right;color:var(--white);font-family:'Syne',sans-serif}
 
-/* Metrics */
-.metrics{display:flex;gap:8px;flex-wrap:wrap}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .metric{
   background:rgba(255,255,255,0.05);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:.5rem .7rem;flex:1;min-width:70px;
+  padding:.5rem .6rem;
 }
-.metric-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
-.metric-val{font-size:15px;font-weight:700;color:var(--white);font-family:'Syne',sans-serif}
+.metric-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.metric-val{font-size:14px;font-weight:700;color:var(--white);font-family:'Syne',sans-serif;line-height:1.1}
+.metric-val.neg{color:var(--coral)}
+.metric-val.pos{color:var(--green)}
 
-/* Buttons */
 .btn-primary{
   background:linear-gradient(135deg,var(--blue),var(--blue2));
   color:var(--white);border:none;
@@ -303,7 +306,6 @@ body::before{
 
 .btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1.25rem}
 
-/* Comparativa */
 .comp-card{
   background:var(--glass);
   border:1px solid var(--border);
@@ -314,7 +316,9 @@ body::before{
   transition:border-color .3s;
 }
 .comp-card.winner{border-color:var(--green);box-shadow:0 0 30px rgba(0,229,160,0.12)}
-.comp-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:.75rem}
+.comp-card.loser{opacity:.85}
+.comp-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:.75rem}
+.comp-header-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .winner-tag{
   background:rgba(0,229,160,0.12);
   border:1px solid rgba(0,229,160,0.3);
@@ -323,13 +327,16 @@ body::before{
   padding:2px 10px;border-radius:20px;
   display:inline-flex;align-items:center;gap:4px;
 }
-.roi-val{font-size:13px;color:var(--muted)}
+.roi-val{font-size:13px;color:var(--muted);font-weight:600}
+.roi-val.neg{color:var(--coral)}
+.roi-val.pos{color:var(--green)}
 
-/* Bar */
-.bar-bg{background:rgba(255,255,255,0.08);border-radius:4px;height:6px;margin:.5rem 0}
+.bar-bg{background:rgba(255,255,255,0.08);border-radius:4px;height:6px;margin:.5rem 0;overflow:hidden}
 .bar-fill{height:6px;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.bar-fill.neg{background:var(--coral) !important}
 
-/* Info box */
+.comp-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:.7rem}
+
 .info-box{
   background:rgba(79,122,255,0.08);
   border:1px solid rgba(79,122,255,0.25);
@@ -338,9 +345,8 @@ body::before{
   margin-bottom:1.25rem;
 }
 .info-box-title{font-size:12px;font-weight:600;color:var(--blue2);margin-bottom:.4rem;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.05em}
-.info-box p{font-size:13px;color:rgba(79,122,255,0.9);line-height:1.6}
+.info-box p{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6}
 
-/* Cierre box */
 .cierre-box{
   background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,229,160,0.06));
   border:1px solid rgba(0,212,255,0.2);
@@ -352,7 +358,6 @@ body::before{
 .cierre-box p{font-size:14px;color:var(--white);line-height:1.7}
 .cierre-box strong{color:var(--cyan)}
 
-/* Share */
 .share-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
 .share-btn{
   display:inline-flex;align-items:center;gap:6px;
@@ -365,7 +370,6 @@ body::before{
 }
 .share-btn:hover{border-color:rgba(255,255,255,0.35);transform:translateY(-1px)}
 
-/* Resumen */
 .resumen-box{
   background:var(--glass);
   border:1px solid var(--border);
@@ -375,19 +379,54 @@ body::before{
   font-size:13px;color:var(--muted);line-height:1.8;
 }
 .resumen-box strong{color:var(--white)}
+.resumen-box .neg{color:var(--coral)}
+.resumen-box .pos{color:var(--green)}
 
-/* Footer */
 .footer{
   border-top:1px solid var(--border);
   margin-top:2rem;padding-top:.875rem;
   text-align:center;
   font-size:11px;color:var(--muted);
   letter-spacing:.03em;
+  line-height:1.6;
 }
 
-@media(max-width:480px){
+/* Responsividad */
+@media(max-width:600px){
+  .header{padding:1.5rem .5rem 1rem}
+  .logo-wrap{padding:.4rem 1rem;margin-bottom:1rem}
+  .logo-wrap img{height:36px}
+  .step-title{font-size:1.15rem}
+  .toggle-row{gap:6px}
+  .toggle-btn{padding:7px 14px;font-size:12px}
+  .horizon-btn{padding:6px 12px;font-size:11px}
+  .prog-dot{width:28px;height:28px;font-size:11px}
+  .prog-line{width:32px;margin-bottom:16px}
+  .prog-label{font-size:9px}
+  .proj-grid{grid-template-columns:1fr}
+  .comp-metrics{grid-template-columns:repeat(2,1fr)}
+  .btn-primary{padding:10px 24px;font-size:13px}
+  .btn-primary.big{padding:12px 30px;font-size:14px}
+}
+
+@media(max-width:420px){
   body{padding:.5rem}
-  .btn-primary.big{padding:12px 28px;font-size:14px}
+  .card,.proj-card,.comp-card{padding:.9rem}
+  .toggle-row{flex-direction:column;align-items:stretch}
+  .toggle-btn{justify-content:center}
+  .horizon-btns{gap:6px}
+  .horizon-btn{flex:1;min-width:calc(50% - 3px)}
+  .btn-row{flex-direction:column}
+  .btn-row .btn-ghost,.btn-row .btn-primary{width:100%;justify-content:center}
+  .share-row{gap:6px}
+  .share-btn{flex:1;justify-content:center;min-width:calc(50% - 3px)}
+  .metric{padding:.4rem .5rem}
+  .metric-val{font-size:13px}
+  .metric-label{font-size:8px}
+  .comp-metrics{grid-template-columns:repeat(2,1fr)}
+  .slider-row label{min-width:50px;font-size:10px}
+  .slider-val{min-width:40px;font-size:12px}
+  .proj-name{font-size:14px}
 }
 </style>
 </head>
@@ -400,7 +439,7 @@ body::before{
     </div>
     <div class="tag"><i class="ti ti-chart-bar"></i> Semana 1</div>
     <h1>Simulador de Selección<br>de Proyectos</h1>
-    <p>Ajusta tu inversión, elige el horizonte de tiempo y descubre cuál proyecto te da el mayor retorno.</p>
+    <p>Compara proyectos con distintos niveles de rentabilidad, riesgo y tiempo de recuperación.</p>
   </div>
 
   <div class="progress" id="progress">
@@ -487,8 +526,8 @@ body::before{
 
     <div class="cierre-box">
       <p>
-        Recuerda: el mejor proyecto no siempre es el de mayor ganancia.<br>
-        <strong>Los métodos de selección te ayudan a decidir con criterios objetivos.</strong>
+        El proyecto con mayor ROI no siempre es el mejor.<br>
+        <strong>La selección requiere ponderar rentabilidad, riesgo y horizonte de recuperación.</strong>
       </p>
     </div>
 
@@ -513,171 +552,18 @@ body::before{
   </div>
 
   <div class="footer">
-    Selección de Proyectos — Semana 1 &nbsp;·&nbsp; Dr. Armando Sandoval Maravilla
+    Selección de Proyectos · Semana 1<br>
+    Dr. Armando Sandoval Maravilla
   </div>
 
 </div>
 
 <script>
-var proyectos={
-  A:{nombre:'Cafetería',      badgeClass:'badge-a',sliderClass:'slider-a',invMax:50,invDef:30,ganBase:8, color:'#00E5A0',barColor:'#00E5A0'},
-  B:{nombre:'Tienda en línea',badgeClass:'badge-b',sliderClass:'slider-b',invMax:30,invDef:15,ganBase:4, color:'#FFB800',barColor:'#FFB800'},
-  C:{nombre:'Lavandería',     badgeClass:'badge-c',sliderClass:'slider-c',invMax:50,invDef:50,ganBase:12,color:'#4F7AFF',barColor:'#4F7AFF'}
-};
-var activos={A:false,B:false,C:false};
-var invValues={A:30,B:15,C:50};
-var horizon=12;
-
-function toggleProj(k){
-  activos[k]=!activos[k];
-  document.getElementById('tog'+k).classList.toggle('on',activos[k]);
-  renderCards();
-  document.getElementById('btn-analizar').disabled=!Object.values(activos).some(Boolean);
-}
-
-function setHorizon(h,el){
-  horizon=h;
-  document.querySelectorAll('.horizon-btn').forEach(function(b){b.classList.remove('active')});
-  el.classList.add('active');
-  renderCards();
-}
-
-function ganancia(k,inv){
-  return Math.round(proyectos[k].ganBase*(inv/proyectos[k].invDef)*horizon);
-}
-function roi(k,inv){
-  return Math.round((ganancia(k,inv)/inv)*100);
-}
-
-function renderCards(){
-  var html='';
-  Object.keys(proyectos).forEach(function(k){
-    if(!activos[k])return;
-    var p=proyectos[k];
-    var inv=invValues[k];
-    var gan=ganancia(k,inv);
-    var r=roi(k,inv);
-    html+='<div class="proj-card">'+
-      '<div class="proj-badge '+p.badgeClass+'">Proyecto '+k+'</div>'+
-      '<div class="proj-name">'+p.nombre+'</div>'+
-      '<div class="slider-row '+p.sliderClass+'">'+
-        '<label>Inversión</label>'+
-        '<input type="range" min="5" max="'+p.invMax+'" step="1" value="'+inv+'" oninput="updInv(\''+k+'\',+this.value)">'+
-        '<span class="slider-val" id="inv'+k+'">$'+inv+'k</span>'+
-      '</div>'+
-      '<div class="metrics">'+
-        '<div class="metric"><div class="metric-label">Ganancia</div><div class="metric-val" id="gan'+k+'">$'+gan+'k</div></div>'+
-        '<div class="metric"><div class="metric-label">ROI</div><div class="metric-val" id="roi'+k+'">'+r+'%</div></div>'+
-      '</div>'+
-    '</div>';
-  });
-  document.getElementById('proj-cards').innerHTML=html;
-}
-
-function updInv(k,v){
-  invValues[k]=v;
-  var el=function(id){return document.getElementById(id)};
-  if(el('inv'+k))el('inv'+k).textContent='$'+v+'k';
-  if(el('gan'+k))el('gan'+k).textContent='$'+ganancia(k,v)+'k';
-  if(el('roi'+k))el('roi'+k).textContent=roi(k,v)+'%';
-}
-
-function setDots(s){
-  for(var i=1;i<=3;i++){
-    var d=document.getElementById('d'+i);
-    d.className='prog-dot';
-    if(i<s)d.classList.add('done');
-    else if(i===s)d.classList.add('active');
-  }
-  for(var j=1;j<=2;j++){
-    var l=document.getElementById('l'+j);
-    l.className='prog-line';
-    if(j<s)l.classList.add('done');
-  }
-}
-
-function goStep2(){
-  var keys=Object.keys(activos).filter(function(k){return activos[k]});
-  var results=keys.map(function(k){
-    return{k:k,inv:invValues[k],gan:ganancia(k,invValues[k]),r:roi(k,invValues[k])};
-  });
-  results.sort(function(a,b){return b.r-a.r});
-  var maxR=results[0].r;
-
-  document.getElementById('horizonte-label').textContent='Proyección a '+horizon+' meses';
-
-  var html='';
-  results.forEach(function(res,i){
-    var p=proyectos[res.k];
-    var pct=Math.round((res.r/maxR)*100);
-    var isWin=i===0;
-    var util=res.gan-res.inv;
-    html+='<div class="comp-card'+(isWin?' winner':'')+'">'+
-      '<div class="comp-header">'+
-        '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
-          '<span class="proj-badge '+p.badgeClass+'">Proyecto '+res.k+' — '+p.nombre+'</span>'+
-          (isWin?'<span class="winner-tag"><i class="ti ti-trophy" style="font-size:11px"></i> Mayor ROI</span>':'')+
-        '</div>'+
-        '<span class="roi-val">ROI '+res.r+'%</span>'+
-      '</div>'+
-      '<div class="bar-bg"><div class="bar-fill" style="width:'+pct+'%;background:'+p.barColor+'"></div></div>'+
-      '<div class="metrics" style="margin-top:.6rem">'+
-        '<div class="metric"><div class="metric-label">Inversión</div><div class="metric-val">$'+res.inv+'k</div></div>'+
-        '<div class="metric"><div class="metric-label">Ganancia</div><div class="metric-val">$'+res.gan+'k</div></div>'+
-        '<div class="metric"><div class="metric-label">Utilidad</div><div class="metric-val" style="color:'+(util>=0?'#00E5A0':'#FF5C5C')+'">$'+util+'k</div></div>'+
-      '</div>'+
-    '</div>';
-  });
-  document.getElementById('comparativa').innerHTML=html;
-
-  var ganador=proyectos[results[0].k].nombre;
-  var txt='Con '+horizon+' meses de horizonte, '+ganador+' obtiene el mayor ROI ('+results[0].r+'%). '+
-    (results.length>1?'Recuerda que el ROI más alto no es el único criterio: el capital disponible, el riesgo y la escalabilidad también son clave.':'Activa más proyectos para comparar y descubrir cómo cambia la decisión.');
-  document.getElementById('reflexion-txt').textContent=txt;
-
-  document.getElementById('step1').classList.remove('active');
-  document.getElementById('step2').classList.add('active');
-  setDots(2);
-}
-
-function goStep1(){
-  document.getElementById('step2').classList.remove('active');
-  document.getElementById('step1').classList.add('active');
-  setDots(1);
-}
-
-function goStep3(){
-  var keys=Object.keys(activos).filter(function(k){return activos[k]});
-  var lines=keys.map(function(k){
-    var p=proyectos[k];
-    return 'Proyecto '+k+' ('+p.nombre+'): $'+invValues[k]+'k → $'+ganancia(k,invValues[k])+'k en '+horizon+' meses · ROI '+roi(k,invValues[k])+'%';
-  });
-  document.getElementById('resumen-final').innerHTML=
-    '<strong>Horizonte:</strong> '+horizon+' meses<br>'+lines.join('<br>');
-
-  var shareText='Simulé proyectos de inversión a '+horizon+' meses. '+lines.join(' | ')+'. ¿Cuál elegirías tú? #SelecciónDeProyectos';
-  var enc=encodeURIComponent(shareText);
-  document.getElementById('swa').href='https://wa.me/?text='+enc;
-  document.getElementById('stw').href='https://twitter.com/intent/tweet?text='+enc;
-  document.getElementById('sfb').href='https://www.facebook.com/sharer/sharer.php?u=https://github.com&quote='+enc;
-
-  document.getElementById('step2').classList.remove('active');
-  document.getElementById('step3').classList.add('active');
-  setDots(3);
-}
-
-function reiniciar(){
-  activos={A:false,B:false,C:false};
-  invValues={A:30,B:15,C:50};
-  horizon=12;
-  document.querySelectorAll('.toggle-btn').forEach(function(b){b.classList.remove('on')});
-  document.querySelectorAll('.horizon-btn').forEach(function(b,i){b.classList.toggle('active',i===1)});
-  document.getElementById('proj-cards').innerHTML='';
-  document.getElementById('btn-analizar').disabled=true;
-  document.getElementById('step3').classList.remove('active');
-  document.getElementById('step1').classList.add('active');
-  setDots(1);
-}
-</script>
-</body>
-</html>
+/*
+ Modelo financiero:
+ - tasaMensual: ingreso neto mensual como fracción de la inversión (ya con costos operativos descontados)
+ - rampUp: meses iniciales en que el proyecto opera al 50% de capacidad
+ - riesgoFactor: multiplicador que penaliza el rendimiento esperado por riesgo del proyecto
+ 
+ Fórmulas:
+ - Ganancia total = inv * tasaMensual *
