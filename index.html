@@ -257,8 +257,16 @@ body::before{
   font-size:15px;
   font-weight:700;
   color:var(--white);
-  margin-bottom:.85rem;
+  margin-bottom:.35rem;
 }
+.proj-info{
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:.85rem;
+  display:flex;align-items:center;gap:5px;
+  font-style:italic;
+}
+.proj-info i{color:var(--cyan);font-style:normal}
 
 .slider-row{display:flex;align-items:center;gap:8px;margin-bottom:.85rem}
 .slider-row label{
@@ -479,12 +487,24 @@ body::before{
   font-size:13px;
   font-weight:700;
   color:var(--cyan);
-  margin-bottom:1rem;
+  margin-bottom:.75rem;
   display:flex;align-items:center;gap:6px;
   text-transform:uppercase;
   letter-spacing:.05em;
 }
-.guia-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.guia-intro{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:1rem;
+}
+.guia-intro strong{color:var(--white)}
+.guia-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:10px;
+  margin-bottom:1rem;
+}
 .guia-item{
   background:rgba(255,255,255,0.03);
   border:1px solid var(--border);
@@ -504,6 +524,17 @@ body::before{
   color:var(--muted);
   line-height:1.55;
 }
+.guia-item p strong{color:var(--white)}
+.guia-ejemplo{
+  background:rgba(0,212,255,0.06);
+  border:1px solid rgba(0,212,255,0.2);
+  border-radius:var(--radius);
+  padding:.85rem 1rem;
+  font-size:12px;
+  color:rgba(255,255,255,0.85);
+  line-height:1.6;
+}
+.guia-ejemplo strong{color:var(--cyan)}
 
 .footer{
   border-top:1px solid var(--border);
@@ -677,20 +708,28 @@ body::before{
   </div>
 
   <div class="guia-box">
-    <div class="guia-title"><i class="ti ti-info-circle"></i> Guía rápida de las métricas</div>
+    <div class="guia-title"><i class="ti ti-info-circle"></i> Cómo leer el simulador</div>
+    <p class="guia-intro">Cada proyecto tiene características propias que no cambian aunque tú modifiques el horizonte de análisis. Lo que cambia es <strong>tu ventana de observación</strong>. Estas son las métricas que verás:</p>
     <div class="guia-grid">
       <div class="guia-item">
+        <div class="guia-label"><i class="ti ti-rocket" style="color:var(--cyan);font-size:15px"></i> Arranque</div>
+        <p>Meses que tarda el proyecto en madurar (operar al 100%). Durante ese tiempo trabaja al 50% porque apenas está ganando clientes, posicionando marca o afinando operación.</p>
+      </div>
+      <div class="guia-item">
         <div class="guia-label"><i class="ti ti-trending-up" style="color:var(--green);font-size:15px"></i> ROI</div>
-        <p>Retorno sobre la inversión. Mide cuánto ganas por cada peso invertido. Positivo significa que ya recuperaste la inversión y hay utilidad.</p>
+        <p>Retorno sobre la inversión en el horizonte que elegiste. Si es negativo, todavía no recuperas lo que pusiste. Si es positivo, ya hay ganancia sobre la inversión.</p>
       </div>
       <div class="guia-item">
         <div class="guia-label"><i class="ti ti-clock-hour-4" style="color:var(--amber);font-size:15px"></i> Payback</div>
-        <p>Tiempo estimado para recuperar la inversión inicial. Cuanto menor sea, más rápido el proyecto deja de operar en pérdida.</p>
+        <p>El mes exacto en que recuperas tu inversión. <strong>No cambia con el horizonte</strong> porque es propio del proyecto. Si un negocio tarda 10 meses en pagarse, tarda 10 meses; tú decides si tu análisis alcanza a verlo (verde) o no (rojo).</p>
       </div>
       <div class="guia-item">
         <div class="guia-label"><i class="ti ti-shield" style="color:var(--blue2);font-size:15px"></i> Riesgo</div>
-        <p>Nivel de incertidumbre del proyecto. A mayor riesgo, mayor probabilidad de que las proyecciones no se cumplan como se esperan.</p>
+        <p>Qué tan probable es que las proyecciones se cumplan. Alto riesgo significa que el resultado puede desviarse mucho de lo esperado. Bajo riesgo significa que es más predecible.</p>
       </div>
+    </div>
+    <div class="guia-ejemplo">
+      <strong>Ejemplo:</strong> Si un proyecto tiene payback de 10 meses y tú analizas solo 6 meses, verás pérdidas (rojo) porque tu ventana termina antes de que el proyecto se pague. Si amplías a 12 meses, verás ganancias (verde). El proyecto es el mismo, cambia el tiempo que le das.
     </div>
   </div>
 
@@ -768,17 +807,29 @@ body::before{
     return Math.round((utilidad(k, inv) / inv) * 100);
   }
 
-  function payback(k, inv){
+  function paybackMonths(k, inv){
     var p = proyectos[k];
     var ingMes = inv * p.tasaMensual * p.riesgoFactor;
-    if(ingMes <= 0) return '-';
+    if(ingMes <= 0) return Infinity;
     var ingRamp = ingMes * 0.5;
     var accum = 0;
-    for(var m = 1; m <= 60; m++){
+    for(var m = 1; m <= 120; m++){
       accum += (m <= p.rampUp) ? ingRamp : ingMes;
-      if(accum >= inv) return m + ' m';
+      if(accum >= inv) return m;
     }
-    return '>60 m';
+    return Infinity;
+  }
+
+  function payback(k, inv){
+    var m = paybackMonths(k, inv);
+    if(!isFinite(m)) return '>10 anios';
+    return m + ' m';
+  }
+
+  function paybackClass(k, inv){
+    var m = paybackMonths(k, inv);
+    if(!isFinite(m)) return 'neg';
+    return (m <= horizon) ? 'pos' : 'neg';
   }
 
   function toggleProj(k){
@@ -821,6 +872,7 @@ body::before{
       html += '<span class="risk-badge ' + p.riesgoClass + '"><i class="ti ti-shield"></i> Riesgo ' + p.riesgoLabel + '</span>';
       html += '</div>';
       html += '<div class="proj-name">' + p.nombre + '</div>';
+      html += '<div class="proj-info"><i class="ti ti-rocket"></i> Arranque: ' + p.rampUp + ' meses (opera al 50%)</div>';
       html += '<div class="slider-row ' + p.sliderClass + '">';
       html += '<label>Inversion</label>';
       html += '<input type="range" min="' + p.invMin + '" max="' + p.invMax + '" step="1" value="' + inv + '" data-slider="' + k + '">';
@@ -829,7 +881,7 @@ body::before{
       html += '<div class="metrics">';
       html += '<div class="metric"><div class="metric-label">Utilidad</div><div class="metric-val ' + utilClass + '" id="util' + k + '">$' + util + 'k</div></div>';
       html += '<div class="metric"><div class="metric-label">ROI</div><div class="metric-val ' + roiClass + '" id="roi' + k + '">' + r + '%</div></div>';
-      html += '<div class="metric"><div class="metric-label">Payback</div><div class="metric-val" id="pb' + k + '">' + pb + '</div></div>';
+      html += '<div class="metric"><div class="metric-label">Payback</div><div class="metric-val ' + paybackClass(k, inv) + '" id="pb' + k + '">' + pb + '</div></div>';
       html += '</div>';
       html += '</div>';
     }
@@ -862,7 +914,10 @@ body::before{
       elRoi.textContent = r + '%';
       elRoi.className = 'metric-val ' + (r >= 0 ? '' : 'neg');
     }
-    if(elPb) elPb.textContent = pb;
+    if(elPb){
+      elPb.textContent = pb;
+      elPb.className = 'metric-val ' + paybackClass(k, v);
+    }
   }
 
   function setDots(s){
@@ -943,7 +998,7 @@ body::before{
       html += '<div class="metric"><div class="metric-label">Inversion</div><div class="metric-val">$' + res.inv + 'k</div></div>';
       html += '<div class="metric"><div class="metric-label">Ganancia</div><div class="metric-val">$' + res.gan + 'k</div></div>';
       html += '<div class="metric"><div class="metric-label">Utilidad</div><div class="metric-val ' + utilClass + '">$' + res.util + 'k</div></div>';
-      html += '<div class="metric"><div class="metric-label">Payback</div><div class="metric-val">' + res.pb + '</div></div>';
+      html += '<div class="metric"><div class="metric-label">Payback</div><div class="metric-val ' + paybackClass(res.k, res.inv) + '">' + res.pb + '</div></div>';
       html += '</div>';
       html += '</div>';
     }
